@@ -1,0 +1,190 @@
+import * as React from 'react';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator, AsyncStorage, StatusBar, ImageBackground } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import loginBG from "./assets/image/loginBG.png";
+
+const userInfo = {username: '1', password: '1', phoneNumber: ''};
+
+class LoginScreen extends React.Component {
+  
+  constructor(props){
+    super(props);
+    this.state = {username: '', password: '', phoneNumber: ''}
+  }
+
+  static navigationOptions = {
+    header:null
+  };  
+
+  render() {
+    return (
+      <ImageBackground source={loginBG} style={styles.container}>
+        {/* <View style={styles.container}>
+          <Text style={styles.logo}>LoginPage</Text>
+          <View style={styles.inputView} >
+            <TextInput  
+              style={styles.inputText}
+              placeholder="Phone Number" 
+              placeholderTextColor="#003f5c"
+              onChangeText={(phoneNumber)=>this.setState({phoneNumber})}
+              value={this.state.phoneNumber}
+            />
+          </View>
+          <View style={styles.inputView} >
+            <TextInput  
+              style={styles.inputText}
+              placeholder="Username" 
+              placeholderTextColor="#003f5c"
+              onChangeText={(username)=>this.setState({username})}
+              value={this.state.username}
+            />
+          </View>
+          <View style={styles.inputView} >
+            <TextInput  
+              secureTextEntry
+              style={styles.inputText}
+              placeholder="Password" 
+              placeholderTextColor="#003f5c"
+              onChangeText={(password)=>this.setState({password})}
+              value={this.state.password}
+              secureTextEntry={true}
+            />
+          </View>
+          <TouchableOpacity>
+            <Text style={styles.forgot}>Forgot Password?</Text>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.loginBtn}
+            onPress = {this._signin}
+          >
+            <Text style={styles.loginText}>LOGIN</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress = {this._signup}
+          >
+            <Text style={styles.loginText}>SIGNUP</Text>
+          </TouchableOpacity>
+        </View> */}
+      </ImageBackground>
+    );
+  }
+
+  _signin = async () => {
+    if (userInfo.username === this.state.username && userInfo.password === this.state.password) {
+      await AsyncStorage.setItem('logged','1');
+      this.props.navigation.navigate('Main', {phoneNumber: this.state.phoneNumber});
+    } else {
+      alert ('Something Is Wrong');
+    }
+  }
+
+  _signup = async () => {
+    this.props.navigation.navigate('SignUp');
+  }
+}
+
+class MainScreen extends React.Component {
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.container}>
+          <Text style={styles.logo}>Main Page</Text>
+        </Text>
+      </View>
+    );
+  }
+}
+
+class SignUpScreen extends React.Component {
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.container}>
+          <Text style={styles.logo}>Sign Up Here</Text>
+        </Text>
+      </View>
+    );
+  }
+}
+
+class AuthLoadingScreen extends React.Component {
+  constructor(props){
+    super(props);
+    this._loadData();
+  }
+
+  render(){
+    return(
+      <View style={StyleSheet.containr}>
+        <ActivityIndicator/>
+        <StatusBar barStyle="default"/>
+      </View>
+    );
+  }
+
+  _loadData = async () => {
+    const logged = await AsyncStorage.getItem('logged');
+    this.props.navigatioon.navigate(logged !== '1' ? 'Auth' : 'App');
+  }
+
+}
+
+const Stack = createStackNavigator();
+
+// export default function App() {
+//   return (
+//     <NavigationContainer>
+//       <Stack.Navigator initialRouteName = "Login">
+//         <Stack.Screen name="Login" component={LoginScreen} />
+//         <Stack.Screen name="Main" component={MainScreen} />
+//         <Stack.Screen name="SignUp" component={SignUpScreen} />
+//       </Stack.Navigator>
+//     </NavigationContainer>
+//   );
+// }
+
+const styles=StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#003f5c',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  logo: {
+    fontWeight:"bold",
+    fontSize:50,
+    color:"#fb5b5a",
+    marginBottom:40
+  },
+  inputView: {
+    width:"80%",
+    backgroundColor:"#465881",
+    borderRadius:25,
+    height:50,
+    marginBottom:20,
+    justifyContent:"center",
+    padding:20
+  },
+  inputText: {
+    height:50,
+    color:"white"
+  },
+  forgot: {
+    color:"white",
+    fontSize:11
+  },
+  loginBtn: {
+    width:"80%",
+    backgroundColor:"#fb5b5a",
+    borderRadius:25,
+    height:50,
+    alignItems:"center",
+    justifyContent:"center",
+    marginTop:40,
+    marginBottom:10
+  },
+  loginText: {
+    color:"white"
+  }
+});
