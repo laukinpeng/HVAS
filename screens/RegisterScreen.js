@@ -1,11 +1,39 @@
 import * as React from 'react';
 import { StyleSheet, KeyboardAvoidingView, Keyboard, Text, TouchableWithoutFeedback} from 'react-native';
 import { Button, Form, Item, Label, Input } from 'native-base';
+import * as firebase from 'firebase';
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(
+    {
+      apiKey: "AIzaSyCjiFpYS_3ZMIngJnBFCe2pAyxDm9_h6_c",
+      authDomain: "hvas-a1caf.firebaseapp.com",
+      projectId: "hvas-a1caf",
+      storageBucket: "hvas-a1caf.appspot.com",
+      messagingSenderId: "1032774821538",
+      appId: "1:1032774821538:web:1b97b85d43307737d219fb",
+      measurementId: "G-22GCX94RRS"
+    }
+  )
+}
 
 class registerScreen extends React.Component {
   constructor(props){
-    super(props);
-    this.state = {emailAddress: '', name: '', password: ''}
+    super(props)
+    this.state = {email: '', password: '', error: '', loading:false}
+  }
+
+  onSignUpPress = () => {
+    this.setState({error:'', loading:true});
+    const{ email,password } = this.state;
+    firebase.auth().createUserWithEmailAndPassword(email,password)
+      .then(() => {
+      this.setState({error:'', loading:false});
+      this.props.navigation.navigate('Login');
+      })
+      .catch(() => {
+        this.setState({error:'Authentication failed',loading: false});
+      })
   }
 
   render() {
@@ -18,40 +46,25 @@ class registerScreen extends React.Component {
             <Item floatingLabel style={styles.inputWidth}>
               <Label>Email Address</Label>
               <Input
-                onChangeText={(emailAddress) => this.setState({emailAddress})}
-                value={this.state.emailAddress}
-              />
-            </Item>
-            <Item floatingLabel style={styles.inputWidth}>
-              <Label>Name</Label>
-              <Input
-                onChangeText={(name) => this.setState({name})}
-                value={this.state.name}
+                onChangeText={email => this.setState({email})}
+                value={this.state.email}
               />
             </Item>
             <Item floatingLabel style={styles.inputWidth}>
               <Label>Password</Label>
               <Input
-                onChangeText={(password) => this.setState({password})}
+                onChangeText={password => this.setState({password})}
                 value={this.state.password}
               />
             </Item>
           </Form>
-          <Button rounded primary style={{marginTop: 50, marginLeft: 20, alignItems: 'center', width: '90%'}} onPress = {this.register}>
+          <Button rounded primary style={{marginTop: 50, marginLeft: 20, alignItems: 'center', width: '90%'}} onPress = {this.onSignUpPress}>
             <Text style={{textAlign: 'center', width: '100%', color: '#ffffff'}}>Register</Text>
           </Button>
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
     )
   }
-
-  register = async => {
-    console.log("checking")
-    console.log(this.state.emailAddress)
-    console.log(this.state.name)
-    console.log(this.state.password)
-  } 
-
 }
 
 export default registerScreen
