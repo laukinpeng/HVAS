@@ -1,13 +1,71 @@
 import * as React from 'react';
 import { StyleSheet, KeyboardAvoidingView, Keyboard, Text, TouchableWithoutFeedback} from 'react-native';
-import { Button, Form, Item, Label, Input } from 'native-base';
-
+import { Button, Form, Item, Label, Input, View } from 'native-base';
 const userInfo = {emailAddress: '1', password: '1'};
 
 class loginScreen extends React.Component {
   constructor(props){
     super(props);
     this.state = {emailAddress: '', password: ''}
+  }
+
+  //big brain fire base
+  // constructor(props){
+  //   super(props);
+  //   this.state = {email:'', password:'', error:'', loading:false};
+  // }
+
+  onLoginPress(){
+    this.setState({error:'', loading:true});
+    const{email,password} = this.state;
+    firebase.auth().signInWithEmailAndPassword(email,password)
+    .then(() => {
+      this.state({error:'',loading:false});
+      this.props.navigation.navigate('Home');
+    })
+    .catch(() => {
+      this.state({error:'Authentication failed',loading:false});
+    } )
+  }
+
+  onSignUpPress(){
+    this.setState({error:'', loading:true});
+    const{email,password} = this.state;
+    firebase.auth().createUserWithEmailAndPassword(email,password)
+    .then(() => {
+      this.state({error:'',loading:false});
+      this.props.navigation.navigate('Home');
+    })
+    .catch(() => {
+      this.state({error:'Authentication failed',loading:false});
+    })
+  }
+
+  renderButtonOrLoading(){
+    if(this.state.loading){
+      return <Text> laoding </Text>
+    }
+    return <View>
+      <Button onPress={this.onLoginPress.bind(this)}>login</Button>
+      <Button onPress={this.onSignUpPress.bind(this)}>Sign Up</Button>
+    </View>
+  }
+  //big pp end
+
+  login = async () => {
+    console.log("email & pw")
+    console.log(this.state.emailAddress)
+    console.log(this.state.password)
+    if (userInfo.emailAddress === this.state.emailAddress && userInfo.password === this.state.password) {
+      this.props.navigation.navigate('Home')
+    } else {
+      alert ("something wrong u dumbfuck")
+    }
+  }
+
+  register = async () => {
+    console.log("register mou")
+    this.props.navigation.navigate('Register')
   }
 
   render() {
@@ -40,22 +98,6 @@ class loginScreen extends React.Component {
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
     );
-  }
-
-  login = async () => {
-    console.log("email & pw")
-    console.log(this.state.emailAddress)
-    console.log(this.state.password)
-    if (userInfo.emailAddress === this.state.emailAddress && userInfo.password === this.state.password) {
-      this.props.navigation.navigate('Home')
-    } else {
-      alert ("something wrong u dumbfuck")
-    }
-  }
-
-  register = async () => {
-    console.log("register mou")
-    this.props.navigation.navigate('Register')
   }
 }
 
