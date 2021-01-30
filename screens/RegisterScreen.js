@@ -18,23 +18,32 @@ if (!firebase.apps.length) {
   )
 }
 
+const userInfo = firebase.firestore();
+
 class registerScreen extends React.Component {
   constructor(props){
     super(props)
-    this.state = {email: '', password: '', error: '', loading:false}
+    this.state = {email: '', password: '', error: '', name: '', loading:false}
   }
 
   onSignUpPress = () => {
     this.setState({error:'', loading:true});
-    const{ email,password } = this.state;
+    const{ email, password, name } = this.state;
     firebase.auth().createUserWithEmailAndPassword(email,password)
-      .then(() => {
+    .then(() => {
       this.setState({error:'', loading:false});
       this.props.navigation.navigate('Login');
       })
-      .catch(() => {
-        this.setState({error:'Authentication failed',loading: false});
-      })
+    .catch(() => {
+      this.setState({error:'Authentication failed',loading: false});
+    })
+    userInfo.collection("users").doc(email).set(
+      {
+        userEmail: email,
+        userPassword: password,
+        userName: name
+      }
+    )
   }
 
   render() {
@@ -57,6 +66,13 @@ class registerScreen extends React.Component {
                 <Input
                   onChangeText={password => this.setState({password})}
                   value={this.state.password}
+                />
+              </Item>
+              <Item floatingLabel style={styles.inputWidth}>
+                <Label>Name</Label>
+                <Input
+                  onChangeText={name => this.setState({name})}
+                  value={this.state.name}
                 />
               </Item>
             </Form>

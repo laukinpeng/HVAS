@@ -17,79 +17,82 @@ if (!firebase.apps.length) {
     }
   )
 }
-const dbh = firebase.firestore();
 
-//call function for tis sht bellow to work maybe??
-async function exampleData(dbh) {
-  // [START example_data]
-  // [START firestore_query_filter_dataset]
-  const citiesRef = dbh.collection('cities');
+const sample = firebase.firestore();
 
-  await citiesRef.doc('SF').set({
-    name: 'San Francisco', state: 'CA', country: 'USA',
-    capital: false, population: 860000,
-    regions: ['west_coast', 'norcal']
-  });
-  await citiesRef.doc('LA').set({
-    name: 'Los Angeles', state: 'CA', country: 'USA',
-    capital: false, population: 3900000,
-    regions: ['west_coast', 'socal']
-  });
-  await citiesRef.doc('DC').set({
-    name: 'Washington, D.C.', state: null, country: 'USA',
-    capital: true, population: 680000,
-    regions: ['east_coast']
-  });
-  await citiesRef.doc('TOK').set({
-    name: 'Tokyo', state: null, country: 'Japan',
-    capital: true, population: 9000000,
-    regions: ['kanto', 'honshu']
-  });
-  await citiesRef.doc('BJ').set({
-    name: 'Beijing', state: null, country: 'China',
-    capital: true, population: 21500000,
-    regions: ['jingjinji', 'hebei']
-  });
-  // [END firestore_query_filter_dataset]
-  // [END example_data]
-}
-//call function for tis sht above to work maybe??
+// //call function for tis sht bellow to work maybe??
+// async function exampleData(sample) {
+//   // [START example_data]
+//   // [START firestore_query_filter_dataset]
+//   const citiesRef = sample.collection('cities');
 
-dbh.collection("cities").doc("SF").set({
-  name: 'San Francisco', state: 'CA', country: 'USA',
-  capital: false, population: 860000,
-  regions: ['west_coast', 'norcal']
-})
+//   await citiesRef.doc('SF').set({
+//     name: 'San Francisco', state: 'CA', country: 'USA',
+//     capital: false, population: 860000,
+//     regions: ['west_coast', 'norcal']
+//   });
+//   await citiesRef.doc('LA').set({
+//     name: 'Los Angeles', state: 'CA', country: 'USA',
+//     capital: false, population: 3900000,
+//     regions: ['west_coast', 'socal']
+//   });
+//   await citiesRef.doc('DC').set({
+//     name: 'Washington, D.C.', state: null, country: 'USA',
+//     capital: true, population: 680000,
+//     regions: ['east_coast']
+//   });
+//   await citiesRef.doc('TOK').set({
+//     name: 'Tokyo', state: null, country: 'Japan',
+//     capital: true, population: 9000000,
+//     regions: ['kanto', 'honshu']
+//   });
+//   await citiesRef.doc('BJ').set({
+//     name: 'Beijing', state: null, country: 'China',
+//     capital: true, population: 21500000,
+//     regions: ['jingjinji', 'hebei']
+//   });
+//   // [END firestore_query_filter_dataset]
+//   // [END example_data]
+// }
+// //call function for tis sht above to work maybe??
 
-dbh.collection("characters").doc("mario").set({
-  employmentball: "test3",
-  outfitColor: "red",
-  specialAttack: "elonmusk"
-})
+// // write to firestore
+// sample.collection("cities").doc("SF").set({
+//   name: 'San Francisco', state: 'CA', country: 'USA',
+//   capital: false, population: 860000,
+//   regions: ['west_coast', 'norcal']
+// })
 
-async function getDocument(dbh) {
-  // [START get_document]
-  // [START firestore_data_get_as_map]
-  const cityRef = dbh.collection('cities').doc('SF');
-  const doc = await cityRef.get();
-  if (!doc.exists) {
-    console.log('No such document!');
-  } else {
-    console.log('Document data:', doc.data());
-  }
-  // [END firestore_data_get_as_map]
-  // [END get_document]
-}
+// sample.collection("characters").doc("mario").set({
+//   employmentball: "test3",
+//   outfitColor: "red",
+//   specialAttack: "elonmusk"
+// })
+
+// async function getDocument(sample) {
+//   // [START get_document]
+//   // [START firestore_data_get_as_map]
+//   const cityRef = sample.collection('cities').doc('SF');
+//   const doc = await cityRef.get();
+//   if (!doc.exists) {
+//     console.log('No such document!');
+//   } else {
+//     console.log('Document data:', doc.data());
+//   }
+//   // [END firestore_data_get_as_map]
+//   // [END get_document]
+// }
 
 class queueScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.getDocument(dbh)
+    this.getDocument(sample)
     // this.getUser();
   }
 
+  //read from firestore 
   getDocument = async () => {
-    const cityRef = dbh.collection('cities').doc('SF');
+    const cityRef = sample.collection('cities').doc('SF');
     const doc = await cityRef.get();
     if (!doc.exists) {
       console.log('No such document!');

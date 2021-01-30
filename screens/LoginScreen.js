@@ -2,6 +2,7 @@ import * as React from 'react';
 import { StyleSheet, KeyboardAvoidingView, Keyboard, Text, TouchableWithoutFeedback} from 'react-native';
 import { Button, Form, Item, Label, Input, Container } from 'native-base';
 import * as firebase from 'firebase';
+import 'firebase/firestore';
 
 if (!firebase.apps.length) {
   firebase.initializeApp(
@@ -17,27 +18,36 @@ if (!firebase.apps.length) {
   )
 }
 
+const userInfo = firebase.firestore();
+
 class loginScreen extends React.Component {
   constructor(props){
     super(props);
-    this.state = {email: '', password: '', error: '', loading:false}
+    this.state = {email: '', password: '', error: '', name: '', loading:false}
   }
 
-  onLoginPress = () => {
+  onLoginPress = async () => {
     this.setState({error:'', loading:true});
-    const{email,password} = this.state;
-    firebase.auth().signInWithEmailAndPassword(email,password)
+    const {email,password} = this.state;
+    firebase.auth().signInWithEmailAndPassword(email, password)
     .then(() => {
       this.setState({error:'',loading:false});
-      this.props.navigation.navigate('Home');
+      this.props.navigation.navigate('Home', {email: email});
     })
     .catch(() => {
       this.state({error:'Authentication failed',loading:false});
-    } )
+    })
+    const userName = userInfo.collection('users').doc(email)
+    const doc = await userName.get();
+    if (!doc.exists) {
+      console.log('No such documents!');
+    } else {
+      console.log('username:', doc.data());
+    }
   }
 
   register = async () => {
-    console.log("register mou")
+    console.log('register mou')
     this.props.navigation.navigate('Register')
   }
 
