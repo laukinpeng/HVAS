@@ -8,6 +8,7 @@ import { Container, Button, Form, Item, Label, Input } from 'native-base';
 import loginScreen from './screens/LoginScreen';
 import homeScreen from './screens/HomeScreen';
 import registerScreen from './screens/RegisterScreen';
+import queueScreen from './screens/QueueScreen';
 
 const userInfo = {emailAddress: '1', password: '1'};
 
@@ -16,10 +17,11 @@ const Stack = createStackNavigator();
 export default function App() {
   return(
     <NavigationContainer>
-      <Stack.Navigator initialRouteName = "Login">
+      <Stack.Navigator initialRouteName = "Home">
         <Stack.Screen name="Login" component={loginScreen}/>
         <Stack.Screen name="Home" component={homeScreen}/>
         <Stack.Screen name="Register" component={registerScreen}/>
+        <Stack.Screen name="Queue" component={queueScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
