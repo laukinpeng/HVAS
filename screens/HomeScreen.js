@@ -1,8 +1,17 @@
 import * as React from 'react';
-import { StyleSheet, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, View, Image} from 'react-native';
+import { StyleSheet, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, View, Image, TouchableOpacity} from 'react-native';
 import { Container, Header, Content, Card, CardItem, Icon, Right, Text, Body } from 'native-base';
 
 class homeScreen extends React.Component {
+  constructor(props){
+    super(props);
+  }
+
+  onQueuePress = () => {
+    console.log("queue to the line")
+    this.props.navigation.navigate('Queue', {item: 86, otherParam: 'hello bitch'})
+  }
+
   render() {
     return(
     <Container>
@@ -13,22 +22,17 @@ class homeScreen extends React.Component {
       <View style={styles.serviceContainer}>
         <Text style={styles.serviceHeader}>Services</Text>
       </View>
-      <View style={styles.serviceContent}> 
-        <Image style={styles.profileIcon} source={require('../assets/queue.png')}/>
-        <Text style={styles.greeting}>Queue</Text>
-        <Image style={styles.profileIcon} source={require('../assets/queue.png')}/>
-        <Text style={styles.greeting}>Check Queue</Text>
+      <View style={styles.serviceContent}>
+        <TouchableOpacity onPress = {this.onQueuePress}>  
+          <Image style={styles.profileIcon} source={require('../assets/queue.png')}/>
+          <Text style={styles.greeting}>Queue</Text>
+        </TouchableOpacity>
+        <TouchableOpacity>  
+          <Image style={styles.profileIcon} source={require('../assets/queue.png')}/>
+          <Text style={styles.greeting}>View Queue</Text>
+        </TouchableOpacity>
       </View>
     </Container>
-    // <View>
-    //   <View style={styles.welcomeContainer}>
-    //     <Image style={styles.profileIcon} source={require('../assets/user.png')}/>
-    //       <Text style={styles.greeting}>Hello User</Text>
-    //     </View>
-    //     <View style={styles.serviceContainer}>
-    //       <Text style={styles.serviceHeader}>Services</Text>
-    //   </View>
-    // </View>
     )
   }
 }

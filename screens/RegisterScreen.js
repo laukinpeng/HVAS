@@ -2,6 +2,7 @@ import * as React from 'react';
 import { StyleSheet, KeyboardAvoidingView, Keyboard, Text, TouchableWithoutFeedback} from 'react-native';
 import { Button, Form, Item, Label, Input, Container } from 'native-base';
 import * as firebase from 'firebase';
+import 'firebase/firestore';
 
 if (!firebase.apps.length) {
   firebase.initializeApp(
