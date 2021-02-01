@@ -109,17 +109,63 @@ class queueScreen extends React.Component {
   // }
 
   render() {
-    const { item, otherParam } = this.props.route.params;
+    // const { item, otherParam } = this.props.route.params;
     return (
       <Container>
-        <View>
-          <Text>Queue here son</Text>
-          <Text>Queue id is: {item}</Text>
-          <Text>{otherParam}</Text>
+        <View style={styles.headerContainer}>
+          <Text style={styles.headerTop}>Thank you for waiting</Text>
+          <Text style={styles.headerText}>Here's your postion in the queue</Text>
+        </View>
+        <View style={styles.number}>
+          <Text style={styles.queueText}>1</Text>
+        </View>
+        <View style={styles.bottomContainer}>
+          <Text style={styles.bottomText}>We'll inform you when it is your turn</Text>
         </View>
       </Container>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  headerContainer: {
+    // flex: 1,
+    flexDirection: 'column',
+    paddingTop: 30,
+    alignItems: 'center',
+  },
+
+  headerTop: {
+    fontSize: 25,
+  },
+
+  headerText: {
+    fontSize: 20,
+    color: '#000000',
+    paddingTop: 10,
+  },
+  
+  number: {
+    flexDirection: 'column',
+    paddingTop: 30,
+    alignItems: 'center',
+  },
+
+  queueText: {
+    fontSize: 140,
+    color: '#000000',
+  },
+
+  bottomContainer: {
+    flexDirection: 'column',
+    paddingTop: 30,
+    alignItems: 'center',
+  },
+
+  bottomText: {
+    fontSize: 20,
+    color: '#000000',
+  }
+})
 
 export default queueScreen
