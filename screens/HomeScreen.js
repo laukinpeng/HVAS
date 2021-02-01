@@ -18,11 +18,13 @@ if (!firebase.apps.length) {
   )
 }
 
-const test = firebase.firestore();
+const dbh = firebase.firestore();
 
 class homeScreen extends React.Component {
   constructor(props){
     super(props);
+    this.getInfo(dbh)
+    this.state = { data: '', result: [], userName: '' }
   }
 
   onQueuePress = () => {
@@ -30,23 +32,32 @@ class homeScreen extends React.Component {
     this.props.navigation.navigate('Queue', {item: 86, otherParam: 'hello bitch'})
   }
 
-  render() {
-    const {email} = this.props.route.params;
-    getInfo = async () => {
-      const {email} = this.state;
-      const user = test.collection('users').doc(email)
-      const doc = await user.get();
-      if (!doc.exists) {
-        console.log('No such documents!');
-      } else {
-        console.log('username:', doc.data());
-      }
+  getInfo = async () => {
+    const { email } = this.props.route.params;
+    const userInfo = dbh.collection('users').doc(email);
+    const doc = await userInfo.get();
+    if (!doc.exists) {
+      console.log('No such shit');
+    } else {
+      let data = doc.data();
+      this.setState({ data:data });
+      console.log(data);
+      console.log(data.userName)
+      const result = Object.values(data);
+      console.log('result:', result)
+      
+      // const userName = result[result.length - 1];
+      // console.log(userName)
+      // this.setState({ userName:userName })
     }
+  }
+
+  render() {    
     return(
     <Container>
       <View style={styles.welcomeContainer}>
         <Image style={styles.profileIcon} source={require('../assets/user.png')}/>
-        <Text style={styles.greeting}>Hello User</Text>
+        <Text style={styles.greeting}>Hello {this.state.data.userName}</Text>
       </View>
       <View style={styles.serviceContainer}>
         <Text style={styles.serviceHeader}>Services</Text>
