@@ -94,7 +94,6 @@ const styles = StyleSheet.create({
   },
 
   greeting: {
-    color: 'white',
     fontSize: 25,
     paddingLeft: 10,
     color: '#616161',
