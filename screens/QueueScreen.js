@@ -122,6 +122,11 @@ class queueScreen extends React.Component {
         <View style={styles.bottomContainer}>
           <Text style={styles.bottomText}>We'll inform you when it is your turn</Text>
         </View>
+        <View style={styles.leaveContainer}>
+          <Button rounded danger style={{ alignSelf: 'center' }}>
+            <Text>Leave Queue</Text>
+          </Button>
+        </View>
       </Container>
     )
   }
@@ -147,7 +152,7 @@ const styles = StyleSheet.create({
   
   number: {
     flexDirection: 'column',
-    paddingTop: 30,
+    padding: 30,
     alignItems: 'center',
   },
 
@@ -165,7 +170,14 @@ const styles = StyleSheet.create({
   bottomText: {
     fontSize: 20,
     color: '#000000',
-  }
+  },
+
+  leaveContainer: {
+    justifyContent: "center",
+    flexDirection: 'column',
+    paddingTop: 30,
+  }, 
+
 })
 
 export default queueScreen
