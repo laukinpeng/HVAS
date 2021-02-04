@@ -24,12 +24,14 @@ class homeScreen extends React.Component {
   constructor(props){
     super(props);
     this.getInfo(dbh)
-    this.state = { data: '', result: [], userName: '' }
+    this.state = { data: '', result: [] }
   }
 
   onQueuePress = () => {
+    const { email } = this.props.route.params;
+    console.log(email)
     console.log("queue to the line")
-    this.props.navigation.navigate('Queue', {item: 86, otherParam: 'hello bitch'})
+    this.props.navigation.navigate('Queue', {email:email})
   }
 
   getInfo = async () => {
@@ -45,10 +47,7 @@ class homeScreen extends React.Component {
       console.log(data.userName)
       const result = Object.values(data);
       console.log('result:', result)
-      
-      // const userName = result[result.length - 1];
-      // console.log(userName)
-      // this.setState({ userName:userName })
+
     }
   }
 
@@ -63,11 +62,11 @@ class homeScreen extends React.Component {
         <Text style={styles.serviceHeader}>Services</Text>
       </View>
       <View style={styles.serviceContent}>
-        <TouchableOpacity onPress = {this.onQueuePress}>  
+        <TouchableOpacity onPress = {this.onQueuePress} style={{padding: 20}}>  
           <Image style={styles.profileIcon} source={require('../assets/queue.png')}/>
           <Text style={styles.greeting}>Queue</Text>
         </TouchableOpacity>
-        <TouchableOpacity>  
+        <TouchableOpacity style={{padding: 20}}>  
           <Image style={styles.profileIcon} source={require('../assets/queue.png')}/>
           <Text style={styles.greeting}>View Queue</Text>
         </TouchableOpacity>
@@ -86,6 +85,7 @@ const styles = StyleSheet.create({
   profileIcon: {
     width: 70,
     height: 70,
+    alignSelf: 'center',
   },
 
   serviceIcon: {
@@ -113,7 +113,10 @@ const styles = StyleSheet.create({
   },
 
   serviceContent: {
+    flexDirection: 'row',
     padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 })
 

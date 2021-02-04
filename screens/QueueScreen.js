@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { StyleSheet, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, View} from 'react-native';
-import { Button, Form, Item, Label, Input, Container, Text } from 'native-base';
+import { StyleSheet, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, View, Text} from 'react-native';
+import { Button, Form, Item, Label, Input, Container } from 'native-base';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
 
@@ -109,7 +109,8 @@ class queueScreen extends React.Component {
   // }
 
   render() {
-    // const { item, otherParam } = this.props.route.params;
+    const { email } = this.props.route.params;
+    console.log(email)
     return (
       <Container>
         <View style={styles.headerContainer}>
@@ -123,8 +124,8 @@ class queueScreen extends React.Component {
           <Text style={styles.bottomText}>We'll inform you when it is your turn</Text>
         </View>
         <View style={styles.leaveContainer}>
-          <Button rounded danger style={{ alignSelf: 'center' }}>
-            <Text>Leave Queue</Text>
+          <Button rounded danger style={{ alignSelf: 'center', width: '30%' }}>
+            <Text style={{ textAlign: 'center', width: '100%', color: '#ffffff' }}>Leave Queue</Text>
           </Button>
         </View>
       </Container>
@@ -173,8 +174,8 @@ const styles = StyleSheet.create({
   },
 
   leaveContainer: {
-    justifyContent: "center",
-    flexDirection: 'column',
+    // justifyContent: "center",
+    // flexDirection: 'column',
     paddingTop: 30,
   }, 
 
