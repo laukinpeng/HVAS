@@ -109,8 +109,9 @@ class queueScreen extends React.Component {
   // }
 
   render() {
-    const { email } = this.props.route.params;
+    const { email, userName } = this.props.route.params;
     console.log(email)
+    console.log(userName)
     return (
       <Container>
         <View style={styles.headerContainer}>

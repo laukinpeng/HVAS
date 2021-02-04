@@ -23,29 +23,44 @@ const dbh = firebase.firestore();
 class homeScreen extends React.Component {
   constructor(props){
     super(props);
-    this.getInfo(dbh)
     this.state = { data: '', result: [] }
+    this.getInfo(dbh)
   }
 
-  onQueuePress = () => {
-    const { email } = this.props.route.params;
+  onQueuePress = async () => {
+    const { email } = this.props.route.params 
     console.log(email)
-    console.log("queue to the line")
-    this.props.navigation.navigate('Queue', {email:email})
+    const queueInfo = dbh.collection('users').doc(email)
+    const doc = await queueInfo.get()
+    if (!doc.exists) {
+      console.log('fucking fucked')
+    } else {
+      let data = doc.data()
+      const userName = data.userName
+      // track here send to apibase
+      // add counter here to track the 
+      //doc = number
+      dbh.collection("queue").doc("queueDetail").set(
+        {
+          userName: userName
+        }
+      )
+      this.props.navigation.navigate('Queue', {email:email, userName})
+    }
   }
 
   getInfo = async () => {
     const { email } = this.props.route.params;
-    const userInfo = dbh.collection('users').doc(email);
-    const doc = await userInfo.get();
+    const userInfo = dbh.collection('users').doc(email)
+    const doc = await userInfo.get()
     if (!doc.exists) {
-      console.log('No such shit');
+      console.log('No such shit')
     } else {
-      let data = doc.data();
-      this.setState({ data:data });
-      console.log(data);
+      let data = doc.data()
+      this.setState({ data:data })
+      console.log(data)
       console.log(data.userName)
-      const result = Object.values(data);
+      const result = Object.values(data)
       console.log('result:', result)
 
     }
