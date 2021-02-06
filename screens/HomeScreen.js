@@ -40,11 +40,6 @@ class homeScreen extends React.Component {
       // track here send to apibase
       // add counter here to track the 
       //doc = number
-      dbh.collection("queue").doc("queueDetail").set(
-        {
-          userName: userName
-        }
-      )
       this.props.navigation.navigate('Queue', {email:email, userName})
     }
   }
