@@ -18,100 +18,28 @@ if (!firebase.apps.length) {
   )
 }
 
-const sample = firebase.firestore();
-
-// //call function for tis sht bellow to work maybe??
-// async function exampleData(sample) {
-//   // [START example_data]
-//   // [START firestore_query_filter_dataset]
-//   const citiesRef = sample.collection('cities');
-
-//   await citiesRef.doc('SF').set({
-//     name: 'San Francisco', state: 'CA', country: 'USA',
-//     capital: false, population: 860000,
-//     regions: ['west_coast', 'norcal']
-//   });
-//   await citiesRef.doc('LA').set({
-//     name: 'Los Angeles', state: 'CA', country: 'USA',
-//     capital: false, population: 3900000,
-//     regions: ['west_coast', 'socal']
-//   });
-//   await citiesRef.doc('DC').set({
-//     name: 'Washington, D.C.', state: null, country: 'USA',
-//     capital: true, population: 680000,
-//     regions: ['east_coast']
-//   });
-//   await citiesRef.doc('TOK').set({
-//     name: 'Tokyo', state: null, country: 'Japan',
-//     capital: true, population: 9000000,
-//     regions: ['kanto', 'honshu']
-//   });
-//   await citiesRef.doc('BJ').set({
-//     name: 'Beijing', state: null, country: 'China',
-//     capital: true, population: 21500000,
-//     regions: ['jingjinji', 'hebei']
-//   });
-//   // [END firestore_query_filter_dataset]
-//   // [END example_data]
-// }
-// //call function for tis sht above to work maybe??
-
-// // write to firestore
-// sample.collection("cities").doc("SF").set({
-//   name: 'San Francisco', state: 'CA', country: 'USA',
-//   capital: false, population: 860000,
-//   regions: ['west_coast', 'norcal']
-// })
-
-// sample.collection("characters").doc("mario").set({
-//   employmentball: "test3",
-//   outfitColor: "red",
-//   specialAttack: "elonmusk"
-// })
-
-// async function getDocument(sample) {
-//   // [START get_document]
-//   // [START firestore_data_get_as_map]
-//   const cityRef = sample.collection('cities').doc('SF');
-//   const doc = await cityRef.get();
-//   if (!doc.exists) {
-//     console.log('No such document!');
-//   } else {
-//     console.log('Document data:', doc.data());
-//   }
-//   // [END firestore_data_get_as_map]
-//   // [END get_document]
-// }
+const dbh = firebase.firestore();
 
 class queueScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.getDocument(sample)
-    // this.getUser();
+    this.state = { data: '' }
+    this.getPplQueue(dbh)
   }
 
-  //read from firestore 
-  getDocument = async () => {
-    const cityRef = sample.collection('cities').doc('SF');
-    const doc = await cityRef.get();
+  getPplQueue = async () => {
+    const QueueInfo = dbh.collection('queue').doc('counter')
+    const doc = await QueueInfo.get()
     if (!doc.exists) {
-      console.log('No such document!');
+      console.log('bakana!?!?!!?!?!??!?')
     } else {
-      console.log('Document data:', doc.data());
+      let data = doc.data()
+      this.setState({ data:data })
+      console.log(data.pplQueue)
     }
   }
 
-  // getUser = async () => {
-  //   console.log("trying to get info")
-  //   const userDocument = await firestore().collection("users").
-  //   doc('0M1j9jC3AS0o8w2JoTx0').get()
-  //   console.log(userDocument)
-  // }
-
   render() {
-    const { email, userName } = this.props.route.params;
-    console.log(email)
-    console.log(userName)
     return (
       <Container>
         <View style={styles.headerContainer}>
@@ -119,7 +47,7 @@ class queueScreen extends React.Component {
           <Text style={styles.headerText}>Here's your postion in the queue</Text>
         </View>
         <View style={styles.number}>
-          <Text style={styles.queueText}>1</Text>
+          <Text style={styles.queueText}>{this.state.data.pplQueue}</Text>
         </View>
         <View style={styles.bottomContainer}>
           <Text style={styles.bottomText}>We'll inform you when it is your turn</Text>

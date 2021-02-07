@@ -4,6 +4,7 @@ import { Container, Header, Content, Card, CardItem, Icon, Right, Text, Body } f
 import * as firebase from 'firebase';
 import 'firebase/firestore';
 
+
 if (!firebase.apps.length) {
   firebase.initializeApp(
     {
@@ -23,25 +24,17 @@ const dbh = firebase.firestore();
 class homeScreen extends React.Component {
   constructor(props){
     super(props);
-    this.state = { data: '', result: [] }
+    this.state = { data: '', result: [], queueNo: '' }
+    // this.getQueueInfo(dbh)
     this.getInfo(dbh)
   }
 
   onQueuePress = async () => {
     const { email } = this.props.route.params 
-    console.log(email)
-    const queueInfo = dbh.collection('users').doc(email)
-    const doc = await queueInfo.get()
-    if (!doc.exists) {
-      console.log('fucking fucked')
-    } else {
-      let data = doc.data()
-      const userName = data.userName
-      // track here send to apibase
-      // add counter here to track the 
-      //doc = number
-      this.props.navigation.navigate('Queue', {email:email, userName})
-    }
+    const userRef = dbh.collection('queue').doc('counter')
+    const increment = firebase.firestore.FieldValue.increment(1)
+    await userRef.update({ pplQueue: increment })
+    this.props.navigation.navigate('Queue', { email:email })
   }
 
   getInfo = async () => {
@@ -60,6 +53,11 @@ class homeScreen extends React.Component {
 
     }
   }
+ 
+  // getQueueInfo = async () => {
+  //   dbh.collection('queue').get().then(snap =>{ size = snap.size})
+  //   console.log("ppl in queue:", size)
+  // }
 
   render() {    
     return(
