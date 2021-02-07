@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, KeyboardAvoidingView, Keyboard, Text, TouchableWithoutFeedback} from 'react-native';
+import { StyleSheet, KeyboardAvoidingView, Keyboard, Text, TouchableWithoutFeedback, View} from 'react-native';
 import { Button, Form, Item, Label, Input, Container } from 'native-base';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
@@ -23,7 +23,7 @@ const userInfo = firebase.firestore();
 class loginScreen extends React.Component {
   constructor(props){
     super(props);
-    this.state = {email: '', password: '', error: '', userName: '', loading:false}
+    this.state = {email: '', password: '', error: '', userName: '', loading: false}
   }
 
   onLoginPress = async () => {
@@ -35,7 +35,7 @@ class loginScreen extends React.Component {
       this.props.navigation.navigate('Home', {email: email})
     })
     .catch(() => {
-      this.state({error:'Authentication failed',loading:false})
+      this.setState({error:'Authentication failed please check email & password',loading: false})
     })
     const userName = userInfo.collection('users').doc(email)
     const doc = await userName.get()
@@ -53,11 +53,11 @@ class loginScreen extends React.Component {
 
   render() {
     return (
-      <Container>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-          <KeyboardAvoidingView style={{ flex: 1}} behavior="padding">
+      <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : 'height'} style={{flex: 1}}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <Container style={{flex: 1}}>
             <Text style={styles.HVAS}>HVAS</Text>
-            <Form style={{marginTop: 100}}>
+            <Form>
               <Item floatingLabel style={styles.inputWidth}>
                 <Label>Email Address</Label>
                 <Input
@@ -68,20 +68,26 @@ class loginScreen extends React.Component {
               <Item floatingLabel style={styles.inputWidth}>
                 <Label>Password</Label>
                 <Input
+                  secureTextEntry={true}
                   onChangeText={(password) => this.setState({password})}
                   value={this.state.password}
                 />
               </Item>
+              <Text style={{paddingLeft: 10, paddingTop: 10, color: '#FF0000', fontWeight: 'bold' }}>{this.state.error}</Text>
             </Form>
-            <Button rounded primary style={{marginTop: 50, marginLeft: 20, alignItems: 'center', width: '90%'}} onPress = {this.onLoginPress}>
-              <Text style={{textAlign: 'center', width: '100%', color: '#ffffff'}}>Login In</Text>
-            </Button>
-            <Button rounded light transparent style={{marginTop: 20, marginLeft: 20, alignItems: 'center', width: '90%'}} onPress = {this.register}>
-              <Text style={{textAlign: 'center', width: '100%', color: '#000000'}}>Register</Text>
-            </Button>
-          </KeyboardAvoidingView>
+            <View style={{paddingTop: 10}}>
+              <Button rounded primary style={{alignSelf: 'center', width: '90%'}} onPress = {this.onLoginPress}>
+                <Text style={{textAlign: 'center', width: '100%', color: '#ffffff'}}>Login In</Text>
+              </Button>
+            </View>
+            <View style={{paddingTop: 10}}>
+              <Button rounded light transparent style={{alignSelf: 'center', width: '90%'}} onPress = {this.register}>
+                <Text style={{textAlign: 'center', width: '100%', color: '#000000'}}>Register</Text>
+              </Button>
+            </View>
+          </Container>
         </TouchableWithoutFeedback>
-      </Container>
+      </KeyboardAvoidingView>
     );
   }
 }
@@ -94,7 +100,7 @@ const styles = StyleSheet.create({
     color: '#000000',
     fontWeight: 'bold',
     textAlign: 'center',
-    paddingTop: 200,
+    paddingTop: 50,
   },
 
   view: {
