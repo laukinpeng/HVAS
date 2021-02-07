@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { StyleSheet, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, View, Text} from 'react-native';
-import { Button, Form, Item, Label, Input, Container } from 'native-base';
+import { StyleSheet, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, View, Image, TouchableOpacity, Text} from 'react-native';
+import { Container, Header, Content, Card, CardItem, Icon, Right, Body } from 'native-base';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
 
@@ -20,7 +20,7 @@ if (!firebase.apps.length) {
 
 const dbh = firebase.firestore();
 
-class queueScreen extends React.Component {
+class viewScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = { data: '' }
@@ -43,43 +43,29 @@ class queueScreen extends React.Component {
     return (
       <Container>
         <View style={styles.headerContainer}>
-          <Text style={styles.headerTop}>Thank you for waiting</Text>
-          <Text style={styles.headerText}>Here's your postion in the queue</Text>
+          <Text style={styles.headerTop}>Amount of people queuing</Text>
         </View>
         <View style={styles.number}>
           <Text style={styles.queueText}>{this.state.data.pplQueue}</Text>
-        </View>
-        <View style={styles.bottomContainer}>
-          <Text style={styles.bottomText}>We'll inform you when it is your turn</Text>
-        </View>
-        <View style={styles.leaveContainer}>
-          <Button rounded danger style={{ alignSelf: 'center', width: '30%' }}>
-            <Text style={{ textAlign: 'center', width: '100%', color: '#ffffff' }}>Leave Queue</Text>
-          </Button>
         </View>
       </Container>
     )
   }
 }
 
+export default viewScreen
+
 const styles = StyleSheet.create({
   headerContainer: {
-    // flex: 1,
     flexDirection: 'column',
-    paddingTop: 30,
+    paddingTop: 50,
     alignItems: 'center',
   },
 
   headerTop: {
-    fontSize: 25,
+    fontSize: 25
   },
 
-  headerText: {
-    fontSize: 20,
-    color: '#000000',
-    paddingTop: 10,
-  },
-  
   number: {
     flexDirection: 'column',
     padding: 30,
@@ -90,24 +76,4 @@ const styles = StyleSheet.create({
     fontSize: 140,
     color: '#000000',
   },
-
-  bottomContainer: {
-    flexDirection: 'column',
-    paddingTop: 30,
-    alignItems: 'center',
-  },
-
-  bottomText: {
-    fontSize: 20,
-    color: '#000000',
-  },
-
-  leaveContainer: {
-    // justifyContent: "center",
-    // flexDirection: 'column',
-    paddingTop: 30,
-  }, 
-
-})
-
-export default queueScreen
+});
