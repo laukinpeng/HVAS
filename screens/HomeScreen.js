@@ -4,6 +4,7 @@ import { Container, Header, Content, Card, CardItem, Icon, Right, Text, Body } f
 import * as firebase from 'firebase';
 import 'firebase/firestore';
 
+
 if (!firebase.apps.length) {
   firebase.initializeApp(
     {
@@ -23,34 +24,40 @@ const dbh = firebase.firestore();
 class homeScreen extends React.Component {
   constructor(props){
     super(props);
+    this.state = { data: '', result: [], queueNo: '' }
+    // this.getQueueInfo(dbh)
     this.getInfo(dbh)
-    this.state = { data: '', result: [], userName: '' }
   }
 
-  onQueuePress = () => {
-    console.log("queue to the line")
-    this.props.navigation.navigate('Queue', {item: 86, otherParam: 'hello bitch'})
+  onQueuePress = async () => {
+    const { email } = this.props.route.params 
+    const userRef = dbh.collection('queue').doc('counter')
+    const increment = firebase.firestore.FieldValue.increment(1)
+    await userRef.update({ pplQueue: increment })
+    this.props.navigation.navigate('Queue', { email:email })
   }
 
   getInfo = async () => {
     const { email } = this.props.route.params;
-    const userInfo = dbh.collection('users').doc(email);
-    const doc = await userInfo.get();
+    const userInfo = dbh.collection('users').doc(email)
+    const doc = await userInfo.get()
     if (!doc.exists) {
-      console.log('No such shit');
+      console.log('No such shit')
     } else {
-      let data = doc.data();
-      this.setState({ data:data });
-      console.log(data);
+      let data = doc.data()
+      this.setState({ data:data })
+      console.log(data)
       console.log(data.userName)
-      const result = Object.values(data);
+      const result = Object.values(data)
       console.log('result:', result)
-      
-      // const userName = result[result.length - 1];
-      // console.log(userName)
-      // this.setState({ userName:userName })
+
     }
   }
+ 
+  // getQueueInfo = async () => {
+  //   dbh.collection('queue').get().then(snap =>{ size = snap.size})
+  //   console.log("ppl in queue:", size)
+  // }
 
   render() {    
     return(
@@ -63,11 +70,11 @@ class homeScreen extends React.Component {
         <Text style={styles.serviceHeader}>Services</Text>
       </View>
       <View style={styles.serviceContent}>
-        <TouchableOpacity onPress = {this.onQueuePress}>  
+        <TouchableOpacity onPress = {this.onQueuePress} style={{padding: 20}}>  
           <Image style={styles.profileIcon} source={require('../assets/queue.png')}/>
           <Text style={styles.greeting}>Queue</Text>
         </TouchableOpacity>
-        <TouchableOpacity>  
+        <TouchableOpacity style={{padding: 20}}>  
           <Image style={styles.profileIcon} source={require('../assets/queue.png')}/>
           <Text style={styles.greeting}>View Queue</Text>
         </TouchableOpacity>
@@ -86,6 +93,7 @@ const styles = StyleSheet.create({
   profileIcon: {
     width: 70,
     height: 70,
+    alignSelf: 'center',
   },
 
   serviceIcon: {
@@ -94,7 +102,6 @@ const styles = StyleSheet.create({
   },
 
   greeting: {
-    color: 'white',
     fontSize: 25,
     paddingLeft: 10,
     color: '#616161',
@@ -114,7 +121,10 @@ const styles = StyleSheet.create({
   },
 
   serviceContent: {
+    flexDirection: 'row',
     padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 })
 

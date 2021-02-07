@@ -23,26 +23,26 @@ const userInfo = firebase.firestore();
 class loginScreen extends React.Component {
   constructor(props){
     super(props);
-    this.state = {email: '', password: '', error: '', name: '', loading:false}
+    this.state = {email: '', password: '', error: '', userName: '', loading:false}
   }
 
   onLoginPress = async () => {
-    this.setState({error:'', loading:true});
-    const {email,password} = this.state;
+    this.setState({error:'', loading:true})
+    const { email, password } = this.state
     firebase.auth().signInWithEmailAndPassword(email, password)
     .then(() => {
       this.setState({error:'',loading:false});
-      this.props.navigation.navigate('Home', {email: email});
+      this.props.navigation.navigate('Home', {email: email})
     })
     .catch(() => {
-      this.state({error:'Authentication failed',loading:false});
+      this.state({error:'Authentication failed',loading:false})
     })
     const userName = userInfo.collection('users').doc(email)
-    const doc = await userName.get();
+    const doc = await userName.get()
     if (!doc.exists) {
-      console.log('No such documents!');
+      console.log('No such documents!')
     } else {
-      console.log('username:', doc.data());
+      console.log('username:', doc.data())
     }
   }
 

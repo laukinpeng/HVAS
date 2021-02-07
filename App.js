@@ -4,6 +4,9 @@ import { StyleSheet, View, ImageBackground, TextInput, TouchableOpacity, Alert, 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator} from '@react-navigation/stack';
 import { Container, Button, Form, Item, Label, Input } from 'native-base';
+import { LogBox } from 'react-native';
+
+LogBox.ignoreLogs(['Setting a timer']);
 
 import loginScreen from './screens/LoginScreen';
 import homeScreen from './screens/HomeScreen';
