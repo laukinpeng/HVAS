@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, KeyboardAvoidingView, Keyboard, Text, TouchableWithoutFeedback} from 'react-native';
+import { StyleSheet, KeyboardAvoidingView, Keyboard, Text, TouchableWithoutFeedback, View} from 'react-native';
 import { Button, Form, Item, Label, Input, Container } from 'native-base';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
@@ -35,7 +35,7 @@ class registerScreen extends React.Component {
       this.props.navigation.navigate('Login');
       })
     .catch(() => {
-      this.setState({error:'Authentication failed',loading: false});
+      this.setState({error:'Authentication failed please check input',loading: false});
     })
     userInfo.collection("users").doc(email).set(
       {
@@ -48,9 +48,9 @@ class registerScreen extends React.Component {
 
   render() {
     return (
-      <Container>
-        <TouchableWithoutFeedback onpress={Keyboard.dismiss} accessible={false}>
-          <KeyboardAvoidingView style={{ flex: 1}} behavior="padding">
+      <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : 'height'} style={{flex: 1}}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <Container style={{flex: 1}}>
             <Text style={styles.header}>Personal Datails</Text>
             <Text style={styles.header2}>Please enter your email address and name</Text>
             <Form>
@@ -75,13 +75,16 @@ class registerScreen extends React.Component {
                   value={this.state.name}
                 />
               </Item>
+              <Text style={{paddingLeft: 10, paddingTop: 10, color: '#FF0000', fontWeight: 'bold' }}>{this.state.error}</Text>
             </Form>
-            <Button rounded primary style={{marginTop: 50, marginLeft: 20, alignItems: 'center', width: '90%'}} onPress = {this.onSignUpPress}>
-              <Text style={{textAlign: 'center', width: '100%', color: '#ffffff'}}>Register</Text>
-            </Button>
-          </KeyboardAvoidingView>
+            <View style={{paddingTop: 10}}>
+              <Button rounded primary style={{alignSelf: 'center', width: '90%'}} onPress = {this.onSignUpPress}>
+                <Text style={{textAlign: 'center', width: '100%', color: '#ffffff'}}>Register</Text>
+              </Button>
+            </View>
+          </Container>
         </TouchableWithoutFeedback>
-      </Container>
+      </KeyboardAvoidingView>
     )
   }
 }
@@ -94,14 +97,14 @@ const styles = StyleSheet.create({
     color: '#616161',
     fontWeight: 'bold',
     paddingHorizontal: 20,
-    paddingTop: 20,
+    paddingTop: 40,
   },
 
   header2: {
     fontSize: 20,
     color: '#616161',
     paddingHorizontal: 20,
-    paddingBottom:100,
+    paddingBottom:20,
   },
 
   inputWidth: {
