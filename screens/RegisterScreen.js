@@ -77,7 +77,7 @@ class registerScreen extends React.Component {
               </Item>
               <Text style={{paddingLeft: 10, paddingTop: 10, color: '#FF0000', fontWeight: 'bold' }}>{this.state.error}</Text>
             </Form>
-
+            <View style={{paddingTop: 10}}>
               <Button rounded primary style={{alignSelf: 'center', width: '90%'}} onPress = {this.onSignUpPress}>
                 <Text style={{textAlign: 'center', width: '100%', color: '#ffffff'}}>Register</Text>
               </Button>
