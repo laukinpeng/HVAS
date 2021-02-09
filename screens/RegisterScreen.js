@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, KeyboardAvoidingView, Keyboard, Text, TouchableWithoutFeedback, View, Alert} from 'react-native';
-import { Button, Form, Item, Label, Input, Container } from 'native-base';
+import { Button, Form, Item, Label, Input, Container, Picker } from 'native-base';
+// import { Picker } from 'react-native'
 import * as firebase from 'firebase';
 import 'firebase/firestore';
 
@@ -23,12 +24,12 @@ const userInfo = firebase.firestore();
 class registerScreen extends React.Component {
   constructor(props){
     super(props)
-    this.state = {email: '', password: '', error: '', name: '', loading:false}
+    this.state = {email: '', password: '', error: '', name: '', loading:false, gender: 'male'}
   }
 
   onSignUpPress = () => {
     this.setState({error:'', loading:true});
-    const{ email, password, name } = this.state;
+    const{ email, password, name, gender } = this.state;
     if (this.state.password.length < 8) {
       Alert.alert('Alert', 'Please type more then 8');
       return;
@@ -45,7 +46,8 @@ class registerScreen extends React.Component {
       {
         userEmail: email,
         userPassword: password,
-        userName: name
+        userName: name,
+        gender: gender
       }
     )
   }
@@ -78,6 +80,16 @@ class registerScreen extends React.Component {
                   onChangeText={name => this.setState({name})}
                   value={this.state.name}
                 />
+              </Item>
+              <Item style={styles.inputWidth}>
+                <Picker
+                  placeholder="Gender"
+                  selectedValue={this.state.gender}
+                  onValueChange={(v)=>this.setState({gender:v})}
+                >
+                  <Picker.Item label= "Male" value="Male"/>
+                  <Picker.Item label= "Female" value="Female"/>
+                </Picker>
               </Item>
               <Text style={{paddingLeft: 10, paddingTop: 10, color: '#FF0000', fontWeight: 'bold' }}>{this.state.error}</Text>
             </Form>
