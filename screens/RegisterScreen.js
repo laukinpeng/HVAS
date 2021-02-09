@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, KeyboardAvoidingView, Keyboard, Text, TouchableWithoutFeedback, View} from 'react-native';
+import { StyleSheet, KeyboardAvoidingView, Keyboard, Text, TouchableWithoutFeedback, View, Alert} from 'react-native';
 import { Button, Form, Item, Label, Input, Container } from 'native-base';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
@@ -29,6 +29,10 @@ class registerScreen extends React.Component {
   onSignUpPress = () => {
     this.setState({error:'', loading:true});
     const{ email, password, name } = this.state;
+    if (this.state.password.length < 8) {
+      Alert.alert('Alert', 'Please type more then 8');
+      return;
+    }
     firebase.auth().createUserWithEmailAndPassword(email,password)
     .then(() => {
       this.setState({error:'', loading:false});

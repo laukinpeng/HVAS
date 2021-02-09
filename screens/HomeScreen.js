@@ -67,12 +67,18 @@ class homeScreen extends React.Component {
       </View>
       <View style={styles.serviceContent}>
         <TouchableOpacity onPress = {this.onQueuePress} style={{padding: 20}}>  
-          <Image style={styles.profileIcon} source={require('../assets/queue.png')}/>
+          <Image style={styles.profileIcon} source={require('../assets/icons8-joining-queue-80.png')}/>
           <Text style={styles.greeting}>Queue</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress = {this.onViewPress} style={{padding: 20}}>  
           <Image style={styles.profileIcon} source={require('../assets/eye.png')}/>
           <Text style={styles.greeting}>View Queue</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.serviceContent}>
+        <TouchableOpacity onPress = {this.null} style={{padding: 20}}>  
+          <Image style={styles.profileIcon} source={require('../assets/tap.png')}/>
+          <Text>Payment</Text>
         </TouchableOpacity>
       </View>
     </Container>

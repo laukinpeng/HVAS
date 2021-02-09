@@ -36,6 +36,7 @@ class viewScreen extends React.Component {
       let data = doc.data()
       this.setState({ data:data })
       console.log(data.pplQueue)
+      
     }
   }
 
