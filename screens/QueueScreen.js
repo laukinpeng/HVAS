@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, View, Text} from 'react-native';
+import { StyleSheet, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, View, Text, Alert} from 'react-native';
 import { Button, Form, Item, Label, Input, Container } from 'native-base';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
@@ -22,11 +22,12 @@ const dbh = firebase.firestore();
 
 class queueScreen extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = { data: '' }
     this.getPplQueue(dbh)
   }
 
+  //add on snapshot
   getPplQueue = async () => {
     const QueueInfo = dbh.collection('queue').doc('counter')
     const doc = await QueueInfo.get()
@@ -37,6 +38,13 @@ class queueScreen extends React.Component {
       this.setState({ data:data })
       console.log(data.pplQueue)
     }
+  }
+
+  onLeavePress = async () => {
+    const userRef = dbh.collection('queue').doc('counter')
+    const increment = firebase.firestore.FieldValue.increment(-1)
+    await userRef.update({ pplQueue: increment })
+    this.props.navigation.navigate('Home')
   }
 
   render() {
@@ -53,7 +61,7 @@ class queueScreen extends React.Component {
           <Text style={styles.bottomText}>We'll inform you when it is your turn</Text>
         </View>
         <View style={styles.leaveContainer}>
-          <Button rounded danger style={{ alignSelf: 'center', width: '30%' }}>
+          <Button rounded danger style={{ alignSelf: 'center', width: '30%' }} onPress = {this.onLeavePress}>
             <Text style={{ textAlign: 'center', width: '100%', color: '#ffffff' }}>Leave Queue</Text>
           </Button>
         </View>

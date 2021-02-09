@@ -4,7 +4,6 @@ import { Container, Header, Content, Card, CardItem, Icon, Right, Text, Body } f
 import * as firebase from 'firebase';
 import 'firebase/firestore';
 
-
 if (!firebase.apps.length) {
   firebase.initializeApp(
     {
@@ -25,7 +24,6 @@ class homeScreen extends React.Component {
   constructor(props){
     super(props);
     this.state = { data: '', result: [], queueNo: '' }
-    // this.getQueueInfo(dbh)
     this.getInfo(dbh)
   }
 
@@ -35,6 +33,10 @@ class homeScreen extends React.Component {
     const increment = firebase.firestore.FieldValue.increment(1)
     await userRef.update({ pplQueue: increment })
     this.props.navigation.navigate('Queue', { email:email })
+  }
+
+  onViewPress = () => {
+    this.props.navigation.navigate('View')
   }
 
   getInfo = async () => {
@@ -50,14 +52,8 @@ class homeScreen extends React.Component {
       console.log(data.userName)
       const result = Object.values(data)
       console.log('result:', result)
-
     }
   }
- 
-  // getQueueInfo = async () => {
-  //   dbh.collection('queue').get().then(snap =>{ size = snap.size})
-  //   console.log("ppl in queue:", size)
-  // }
 
   render() {    
     return(
@@ -71,12 +67,18 @@ class homeScreen extends React.Component {
       </View>
       <View style={styles.serviceContent}>
         <TouchableOpacity onPress = {this.onQueuePress} style={{padding: 20}}>  
-          <Image style={styles.profileIcon} source={require('../assets/queue.png')}/>
+          <Image style={styles.profileIcon} source={require('../assets/icons8-joining-queue-80.png')}/>
           <Text style={styles.greeting}>Queue</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={{padding: 20}}>  
-          <Image style={styles.profileIcon} source={require('../assets/queue.png')}/>
+        <TouchableOpacity onPress = {this.onViewPress} style={{padding: 20}}>  
+          <Image style={styles.profileIcon} source={require('../assets/eye.png')}/>
           <Text style={styles.greeting}>View Queue</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.serviceContent}>
+        <TouchableOpacity onPress = {this.null} style={{padding: 20}}>  
+          <Image style={styles.profileIcon} source={require('../assets/tap.png')}/>
+          <Text>Payment</Text>
         </TouchableOpacity>
       </View>
     </Container>

@@ -75,14 +75,14 @@ class loginScreen extends React.Component {
               </Item>
               <Text style={{paddingLeft: 10, paddingTop: 10, color: '#FF0000', fontWeight: 'bold' }}>{this.state.error}</Text>
             </Form>
-            <View style={{paddingTop: 10}}>
+            <View style={{paddingTop: 50}}>
               <Button rounded primary style={{alignSelf: 'center', width: '90%'}} onPress = {this.onLoginPress}>
-                <Text style={{textAlign: 'center', width: '100%', color: '#ffffff'}}>Login In</Text>
+                <Text style={{textAlign: 'center', width: '100%', color: '#ffffff', fontWeight: 'bold',}}>Login In</Text>
               </Button>
             </View>
             <View style={{paddingTop: 10}}>
               <Button rounded light transparent style={{alignSelf: 'center', width: '90%'}} onPress = {this.register}>
-                <Text style={{textAlign: 'center', width: '100%', color: '#000000'}}>Register</Text>
+                <Text style={{textAlign: 'center', width: '100%', color: '#000000', fontWeight: 'bold',}}>Register</Text>
               </Button>
             </View>
           </Container>
