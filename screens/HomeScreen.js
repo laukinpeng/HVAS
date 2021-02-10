@@ -32,7 +32,7 @@ class homeScreen extends React.Component {
     const userRef = dbh.collection('queue').doc('counter')
     const increment = firebase.firestore.FieldValue.increment(1)
     await userRef.update({ pplQueue: increment })
-    this.props.navigation.navigate('Queue', { email:email })
+    this.props.navigation.navigate('Visit', { email:email })
   }
 
   onViewPress = () => {

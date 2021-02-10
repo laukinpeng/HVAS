@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, KeyboardAvoidingView, Keyboard, Text, TouchableWithoutFeedback, View, Alert} from 'react-native';
-import { Button, Form, Item, Label, Input, Container, Picker } from 'native-base';
-// import { Picker } from 'react-native'
+import { Button, Form, Item, Label, Input, Container } from 'native-base';
+import { Picker } from 'react-native'
 import * as firebase from 'firebase';
 import 'firebase/firestore';
 
@@ -19,46 +19,46 @@ if (!firebase.apps.length) {
   )
 }
 
-const userInfo = firebase.firestore();
+const dbh = firebase.firestore();
 
 class registerScreen extends React.Component {
   constructor(props){
     super(props)
-    this.state = {email: '', password: '', error: '', name: '', loading:false, gender: 'male'}
+    this.state = {email: '', password: '', error: '', name: '', loading:false, gender: ''}
   }
 
   onSignUpPress = () => {
-    this.setState({error:'', loading:true});
-    const{ email, password, name, gender } = this.state;
+    this.setState({error:'', loading:true})
+    const{ email, password, name, gender } = this.state
     if (this.state.password.length < 8) {
       Alert.alert('Alert', 'Please type more then 8');
       return;
     }
     firebase.auth().createUserWithEmailAndPassword(email,password)
     .then(() => {
-      this.setState({error:'', loading:false});
-      this.props.navigation.navigate('Login');
+      this.setState({error:'', loading:false})
+      this.props.navigation.navigate('Login')
       })
     .catch(() => {
       this.setState({error:'Authentication failed please check input',loading: false});
     })
-    userInfo.collection("users").doc(email).set(
+    dbh.collection("users").doc(email).set(
       {
         userEmail: email,
         userPassword: password,
         userName: name,
-        gender: gender
+        userGender: gender,
       }
     )
   }
-
+  
   render() {
     return (
       <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : 'height'} style={{flex: 1}}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <Container style={{flex: 1}}>
             <Text style={styles.header}>Personal Datails</Text>
-            <Text style={styles.header2}>Please enter your email address and name</Text>
+            <Text style={styles.header2}>Please enter your detail</Text>
             <Form>
               <Item floatingLabel style={styles.inputWidth}>
                 <Label>Email Address</Label>
@@ -70,6 +70,7 @@ class registerScreen extends React.Component {
               <Item floatingLabel style={styles.inputWidth}>
                 <Label>Password</Label>
                 <Input
+                  secureTextEntry={true}
                   onChangeText={password => this.setState({password})}
                   value={this.state.password}
                 />
@@ -83,12 +84,15 @@ class registerScreen extends React.Component {
               </Item>
               <Item style={styles.inputWidth}>
                 <Picker
-                  placeholder="Gender"
                   selectedValue={this.state.gender}
-                  onValueChange={(v)=>this.setState({gender:v})}
+                  prompt='Gender'
+                  style={{color:'	#808080', width: "100%", }}
+                  onValueChange={(itemValue, itemIndex) => 
+                    this.setState({gender: itemValue})}
                 >
-                  <Picker.Item label= "Male" value="Male"/>
-                  <Picker.Item label= "Female" value="Female"/>
+                  <Picker.Item label="" value=""/>
+                  <Picker.Item label="Male" value="Male"/>
+                  <Picker.Item label="Female" value="Female"/>
                 </Picker>
               </Item>
               <Text style={{paddingLeft: 10, paddingTop: 10, color: '#FF0000', fontWeight: 'bold' }}>{this.state.error}</Text>

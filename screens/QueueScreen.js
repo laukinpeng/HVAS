@@ -23,11 +23,10 @@ const dbh = firebase.firestore();
 class queueScreen extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { data: '' }
+    this.state = { data: '', sensei: '' }
     this.getPplQueue(dbh)
   }
 
-  //add on snapshot
   getPplQueue = async () => {
     const QueueInfo = dbh.collection('queue').doc('counter')
     const doc = await QueueInfo.get()
@@ -69,6 +68,8 @@ class queueScreen extends React.Component {
     )
   }
 }
+
+export default queueScreen
 
 const styles = StyleSheet.create({
   headerContainer: {
@@ -118,4 +119,3 @@ const styles = StyleSheet.create({
 
 })
 
-export default queueScreen
