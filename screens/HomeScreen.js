@@ -32,11 +32,11 @@ class homeScreen extends React.Component {
     const userRef = dbh.collection('queue').doc('counter')
     const increment = firebase.firestore.FieldValue.increment(1)
     await userRef.update({ pplQueue: increment })
-    this.props.navigation.navigate('Queue', { email:email })
+    this.props.navigation.navigate('Visit', { email:email })
   }
 
-  onViewPress = () => {
-    this.props.navigation.navigate('View')
+  onRecordPress = () => {
+    this.props.navigation.navigate('Record')
   }
 
   getInfo = async () => {
@@ -70,9 +70,9 @@ class homeScreen extends React.Component {
           <Image style={styles.profileIcon} source={require('../assets/icons8-joining-queue-80.png')}/>
           <Text style={styles.greeting}>Queue</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress = {this.onViewPress} style={{padding: 20}}>  
-          <Image style={styles.profileIcon} source={require('../assets/eye.png')}/>
-          <Text style={styles.greeting}>View Queue</Text>
+        <TouchableOpacity onPress = {this.onRecordPress} style={{padding: 20}}>  
+          <Image style={styles.profileIcon} source={require('../assets/medical-file.png')}/>
+          <Text style={styles.greeting}>Records</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.serviceContent}>

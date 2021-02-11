@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { StyleSheet, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, View, Text, Alert} from 'react-native';
-import { Button, Form, Item, Label, Input, Container } from 'native-base';
+import { Button, Form, Item, Label, Input, Container, Card, CardItem } from 'native-base';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
 
@@ -23,20 +23,34 @@ const dbh = firebase.firestore();
 class queueScreen extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { data: '' }
+    this.state = { data: '', visit: '', sensei: '', reason: '', time: '' }
     this.getPplQueue(dbh)
+    this.getVisitInfo(dbh)
   }
 
-  //add on snapshot
   getPplQueue = async () => {
-    const QueueInfo = dbh.collection('queue').doc('counter')
-    const doc = await QueueInfo.get()
+    const queueInfo = dbh.collection('queue').doc('counter')
+    const doc = await queueInfo.get()
     if (!doc.exists) {
       console.log('bakana!?!?!!?!?!??!?')
     } else {
       let data = doc.data()
       this.setState({ data:data })
       console.log(data.pplQueue)
+    }
+  }
+
+  getVisitInfo = async () => {
+    const { name } = this.props.route.params;
+    const visitInfo = dbh.collection('visit').doc(name)
+    const doc = await visitInfo.get()
+    if (!doc.exists) {
+      console.log('hello!?!?!?!?!?!?!')
+    } else {
+      let visit = doc.data()
+      this.setState({ visit:visit })
+      const time = visit.queueTime.toDate().toTimeString().substr(0, 8)
+      this.setState({ time:time })
     }
   }
 
@@ -60,6 +74,11 @@ class queueScreen extends React.Component {
         <View style={styles.bottomContainer}>
           <Text style={styles.bottomText}>We'll inform you when it is your turn</Text>
         </View>
+        <View style={styles.visitDetail}>
+          <Text style={styles.sensei}>{this.state.visit.visitDoctor}</Text>
+          <Text style={styles.reason}>{this.state.visit.visitReason}</Text>
+          <Text style={styles.time}>Queue Time: {this.state.time}</Text>
+        </View>
         <View style={styles.leaveContainer}>
           <Button rounded danger style={{ alignSelf: 'center', width: '30%' }} onPress = {this.onLeavePress}>
             <Text style={{ textAlign: 'center', width: '100%', color: '#ffffff' }}>Leave Queue</Text>
@@ -69,6 +88,8 @@ class queueScreen extends React.Component {
     )
   }
 }
+
+export default queueScreen
 
 const styles = StyleSheet.create({
   headerContainer: {
@@ -116,6 +137,25 @@ const styles = StyleSheet.create({
     paddingTop: 30,
   }, 
 
+  visitDetail: {
+    paddingTop: 30,
+    width: "95%",
+    alignSelf: "center",
+    alignItems: 'center',
+  },
+
+  sensei: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    paddingBottom: 10,
+  },
+
+  reason: {
+    fontSize: 20,
+  },
+
+  time: {
+    fontSize: 20,
+  }
 })
 
-export default queueScreen
