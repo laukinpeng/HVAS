@@ -23,7 +23,7 @@ const dbh = firebase.firestore();
 class queueScreen extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { data: '', visit: '', sensei: '', reason: '' }
+    this.state = { data: '', visit: '', sensei: '', reason: '', time: '' }
     this.getPplQueue(dbh)
     this.getVisitInfo(dbh)
   }
@@ -49,6 +49,8 @@ class queueScreen extends React.Component {
     } else {
       let visit = doc.data()
       this.setState({ visit:visit })
+      const time = visit.queueTime.toDate().toTimeString().substr(0, 8)
+      this.setState({ time:time })
     }
   }
 
@@ -75,6 +77,7 @@ class queueScreen extends React.Component {
         <View style={styles.visitDetail}>
           <Text style={styles.sensei}>{this.state.visit.visitDoctor}</Text>
           <Text style={styles.reason}>{this.state.visit.visitReason}</Text>
+          <Text style={styles.time}>Join Queue Time: {this.state.time}</Text>
         </View>
         <View style={styles.leaveContainer}>
           <Button rounded danger style={{ alignSelf: 'center', width: '30%' }} onPress = {this.onLeavePress}>
@@ -148,6 +151,10 @@ const styles = StyleSheet.create({
   },
 
   reason: {
+    fontSize: 20,
+  },
+
+  time: {
     fontSize: 20,
   }
 })

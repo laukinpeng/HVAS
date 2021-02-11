@@ -43,6 +43,7 @@ class visitScreen extends React.Component {
           userName: data.userName,
           visitDoctor: sensei,
           visitReason: reason,
+          queueTime: new Date(),
         }
       )
       this.props.navigation.navigate('Queue', {name: name})
