@@ -37,6 +37,7 @@ class visitScreen extends React.Component {
     } else {
       let data = doc.data()
       this.setState({ data:data })
+      const name = data.userName
       dbh.collection("visit").doc(data.userName).set(
         {
           userName: data.userName,
@@ -44,7 +45,7 @@ class visitScreen extends React.Component {
           visitReason: reason,
         }
       )
-      this.props.navigation.navigate('Queue')
+      this.props.navigation.navigate('Queue', {name: name})
     }
   }
 
