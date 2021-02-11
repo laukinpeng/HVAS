@@ -77,7 +77,7 @@ class queueScreen extends React.Component {
         <View style={styles.visitDetail}>
           <Text style={styles.sensei}>{this.state.visit.visitDoctor}</Text>
           <Text style={styles.reason}>{this.state.visit.visitReason}</Text>
-          <Text style={styles.time}>Join Queue Time: {this.state.time}</Text>
+          <Text style={styles.time}>Queue Time: {this.state.time}</Text>
         </View>
         <View style={styles.leaveContainer}>
           <Button rounded danger style={{ alignSelf: 'center', width: '30%' }} onPress = {this.onLeavePress}>
