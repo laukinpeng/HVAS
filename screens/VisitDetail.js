@@ -46,7 +46,10 @@ class visitScreen extends React.Component {
           queueTime: new Date(),
         }
       )
-      this.props.navigation.navigate('Queue', {name: name})
+      const counterRef = dbh.collection('queue').doc(sensei)
+      const increment = firebase.firestore.FieldValue.increment(1)
+      await counterRef.update({ pplQueue: increment })
+      this.props.navigation.navigate('Queue', {name: name, sensei: sensei})
     }
   }
 
