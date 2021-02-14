@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { StyleSheet, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, View, Text, Alert} from 'react-native';
-import { Button, Form, Item, Label, Input, Container, Card, CardItem} from 'native-base';
+import { StyleSheet, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, View, Image, TouchableOpacity, Text} from 'react-native';
+import { Container, Header, Content, Card, CardItem, Icon, Right, Body, Form, Item, Button } from 'native-base';
 import { Picker } from 'react-native'
 import * as firebase from 'firebase';
 import 'firebase/firestore';
@@ -21,51 +21,36 @@ if (!firebase.apps.length) {
 
 const dbh = firebase.firestore();
 
-class recordDetailScreen extends React.Component {
+class paymentDetailScreen extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { data: '', time: '' }
-    this.getRecord(dbh)
+    this.state = { data: '', invoiceNo: '' }
+    this.getPayment(dbh)
   }
 
-  getRecord = async () => {
-    const {visitNo} = this.props.route.params
-    const visitRef = dbh.collection('record').doc('laukinpeng').collection('visit').doc(visitNo)
-    const doc = await visitRef.get()
-    if (!doc.exists) {
-      console.log('patient mimght be dead')
+  getPayment = async () => {
+    const {invoiceNo} = this.props.route.params
+    const paymentRef = dbh.collection('payment').doc('laukinpeng').collection('invoice').doc(invoiceNo)
+    const doc = await paymentRef.get()
+    if(!doc.exists) {
+      console.log('patient dato son')
     } else {
       let data = doc.data()
       this.setState({ data:data })
-      const time = data.visitTime.toDate().toTimeString().substr(0, 8)
-      this.setState({ time:time })
-      console.log(data)
     }
   }
 
   render() {
-    return (
+    return(
       <Container>
-        <Text style={styles.header}>{this.state.data.visitNo}</Text>
-        <Text style={styles.header2}>Doctor: {this.state.data.doctor}</Text>
-        <Text style={styles.header3}>Visit Time: {this.state.time}</Text>
-        {/* patient name */}
-        <Text style={styles.diagnosisHeader}>Diagnosis  Note</Text>
-        <View style={styles.card}>
-          <Card>
-            <CardItem>
-              <Text style={styles.text}>
-                {this.state.data.note}
-              </Text>
-            </CardItem>
-          </Card>
-        </View>
+        <Text style={styles.header}>{this.state.data.invoiceNo}</Text>
+        <Text style={styles.header2}>{this.state.data.inChargeDoctor}</Text>
       </Container>
     )
   }
 }
 
-export default recordDetailScreen
+export default paymentDetailScreen
 
 const styles = StyleSheet.create({
   header: {

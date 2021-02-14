@@ -49,6 +49,10 @@ class homeScreen extends React.Component {
     }
   }
 
+  onPaymentPress = async () => {
+    this.props.navigation.navigate('Payment')
+  }
+
   getInfo = async () => {
     const { email } = this.props.route.params;
     const userInfo = dbh.collection('users').doc(email)
@@ -86,7 +90,7 @@ class homeScreen extends React.Component {
         </TouchableOpacity>
       </View>
       <View style={styles.serviceContent}>
-        <TouchableOpacity onPress = {this.null} style={{padding: 20}}>  
+        <TouchableOpacity onPress = {this.onPaymentPress} style={{padding: 20}}>  
           <Image style={styles.profileIcon} source={require('../assets/tap.png')}/>
           <Text>Payment</Text>
         </TouchableOpacity>
@@ -95,6 +99,8 @@ class homeScreen extends React.Component {
     )
   }
 }
+
+export default homeScreen
 
 const styles = StyleSheet.create({
   welcomeContainer: {
@@ -140,4 +146,3 @@ const styles = StyleSheet.create({
   },
 })
 
-export default homeScreen

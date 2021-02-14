@@ -39,7 +39,7 @@ class recordScreen extends React.Component {
   // }
 
   onViewPress = async () => {
-    const{ visitNo  } = this.state
+    const{ visitNo } = this.state
     this.props.navigation.navigate('Record Detail', {visitNo: visitNo})
   }
 
@@ -58,8 +58,8 @@ class recordScreen extends React.Component {
                 this.setState({visitNo: itemValue})}
             >
               <Picker.Item label="" value=""/>
-              <Picker.Item label="Visit 1" value="visit1"/>
-              <Picker.Item label="Visit 2" value="visit2"/>
+              <Picker.Item label="Visit 0001" value="visit1"/>
+              <Picker.Item label="Visit 0002" value="visit2"/>
             </Picker>
           </Item>
           <View style={{paddingTop: 40}}>
