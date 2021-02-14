@@ -30,7 +30,7 @@ class registerScreen extends React.Component {
   onSignUpPress = () => {
     this.setState({error:'', loading:true})
     const{ email, password, name, gender } = this.state
-    if (this.state.password.length < 8) {
+    if (this.state.password.length < 7) {
       Alert.alert('Alert', 'Please type more then 8');
       return;
     }
@@ -83,6 +83,7 @@ class registerScreen extends React.Component {
                 />
               </Item>
               <Item style={styles.inputWidth}>
+                <Label>Gender</Label>
                 <Picker
                   selectedValue={this.state.gender}
                   prompt='Gender'

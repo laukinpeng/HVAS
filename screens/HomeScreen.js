@@ -35,8 +35,18 @@ class homeScreen extends React.Component {
     this.props.navigation.navigate('Visit', { email:email })
   }
 
-  onRecordPress = () => {
-    this.props.navigation.navigate('Record')
+  onRecordPress = async () => {
+    const { email } = this.props.route.params
+    const userInfo = dbh.collection('users').doc(email)
+    const doc = await userInfo.get()
+    if (!doc.exists) {
+      console.log('bakana!?!?!??!?!?!?!?!')
+    } else {
+      let data = doc.data()
+      this.setState({ data:data })
+      const name = data.userName
+      this.props.navigation.navigate('Record', {name: name})
+    }
   }
 
   getInfo = async () => {

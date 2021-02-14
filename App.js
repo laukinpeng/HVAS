@@ -15,6 +15,7 @@ import queueScreen from './screens/QueueScreen';
 import viewScreen from './screens/ViewScreen';
 import visitScreen from './screens/VisitDetail';
 import recordScreen from './screens/RecordScreen';
+import recordDetailScreen from './screens/RecordDetailScreen'
 
 const userInfo = {emailAddress: '1', password: '1'};
 
@@ -31,6 +32,7 @@ export default function App() {
         <Stack.Screen name="View" component={viewScreen}/>
         <Stack.Screen name="Visit" component={visitScreen}/>
         <Stack.Screen name="Record" component={recordScreen}/>
+        <Stack.Screen name="Record Detail" component={recordDetailScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
