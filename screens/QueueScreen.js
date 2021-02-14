@@ -23,16 +23,17 @@ const dbh = firebase.firestore();
 class queueScreen extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { data: '', visit: '', sensei: '', reason: '', time: '' }
-    this.getPplQueue(dbh)
+    this.state = { data: '', visit: '', sensei: '', reason: '', time: '', queueNo: '' }
+    this.getQueueInfo(dbh)
     this.getVisitInfo(dbh)
   }
 
-  getPplQueue = async () => {
-    const queueInfo = dbh.collection('queue').doc('counter')
+  getQueueInfo = async () => {
+    const {  sensei } = this.props.route.params;
+    const queueInfo = dbh.collection('queue').doc(sensei)
     const doc = await queueInfo.get()
     if (!doc.exists) {
-      console.log('bakana!?!?!!?!?!??!?')
+      console.log('dochi dochi')
     } else {
       let data = doc.data()
       this.setState({ data:data })
@@ -41,7 +42,7 @@ class queueScreen extends React.Component {
   }
 
   getVisitInfo = async () => {
-    const { name } = this.props.route.params;
+    const { name, sensei } = this.props.route.params;
     const visitInfo = dbh.collection('visit').doc(name)
     const doc = await visitInfo.get()
     if (!doc.exists) {

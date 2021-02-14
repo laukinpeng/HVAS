@@ -29,9 +29,9 @@ class homeScreen extends React.Component {
 
   onQueuePress = async () => {
     const { email } = this.props.route.params 
-    const userRef = dbh.collection('queue').doc('counter')
-    const increment = firebase.firestore.FieldValue.increment(1)
-    await userRef.update({ pplQueue: increment })
+    // const userRef = dbh.collection('queue').doc('counter')
+    // const increment = firebase.firestore.FieldValue.increment(1)
+    // await userRef.update({ pplQueue: increment })
     this.props.navigation.navigate('Visit', { email:email })
   }
 
