@@ -24,7 +24,7 @@ const dbh = firebase.firestore();
 class paymentDetailScreen extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { data: '', invoiceNo: '' }
+    this.state = { data: '', time: '', AdministrativeCharge: '', Consultation:'', Medication:'', total:''}
     this.getPayment(dbh)
   }
 
@@ -37,6 +37,21 @@ class paymentDetailScreen extends React.Component {
     } else {
       let data = doc.data()
       this.setState({ data:data })
+
+      const time = data.dateTime.toDate().toString().substr(0, 21)
+      this.setState({ time:time })
+
+      const AdministrativeCharge = data.AdministrativeCharge.toFixed(2)
+      this.setState({AdministrativeCharge:AdministrativeCharge})
+
+      const Consultation = data.Consultation.toFixed(2)
+      this.setState({Consultation:Consultation})
+
+      const Medication = data.Medication.toFixed(2)
+      this.setState({Medication:Medication})
+
+      const total = data.total.toFixed(2)
+      this.setState({total:total})
     }
   }
 
@@ -44,7 +59,59 @@ class paymentDetailScreen extends React.Component {
     return(
       <Container>
         <Text style={styles.header}>{this.state.data.invoiceNo}</Text>
-        <Text style={styles.header2}>{this.state.data.inChargeDoctor}</Text>
+        <Text style={styles.header2}>Doctor: {this.state.data.inChargeDoctor}</Text>
+        <Text style={styles.header3}>Date/Time: {this.state.time}</Text>
+        {/* patient name */}
+        <Text style={styles.billHeader}>Description</Text>
+        <View style={styles.card}>
+          <Card>
+            <CardItem>
+              <View style={{flex: 1, justifyContent: 'space-between', flexDirection: 'row'}}>
+                <View>
+                  <Text style={styles.text}>Administrative Charge:</Text>
+                </View>
+                <View>
+                  <Text style={styles.text}>{this.state.AdministrativeCharge}</Text>
+                </View>
+              </View>
+            </CardItem>
+            <CardItem>
+              <View style={{flex: 1, justifyContent: 'space-between', flexDirection: 'row'}}>
+                <View>
+                  <Text style={styles.text}>Consultation:</Text>
+                </View>
+                <View>
+                  <Text style={styles.text}>{this.state.Consultation}</Text>
+                </View>
+              </View>
+            </CardItem>
+            <CardItem>
+              <View style={{flex: 1, justifyContent: 'space-between', flexDirection: 'row'}}>
+                <View>
+                  <Text style={styles.text}>Medication:</Text>
+                </View>
+                <View>
+                  <Text style={styles.text}>{this.state.Medication}</Text>
+                </View>
+              </View>
+            </CardItem>
+            <CardItem>
+              <View style={{flex: 1, justifyContent: 'space-between', flexDirection: 'row'}}>
+                <View>
+                  <Text style={styles.text}>Total:</Text>
+                </View>
+                <View>
+                  <Text style={styles.text}>{this.state.total}</Text>
+                </View>
+              </View>
+            </CardItem>
+          </Card>
+        </View>
+        <View style={{paddingTop: 40}}>
+          <Button rounded primary style={{alignSelf: 'center', width: '90%'}} onPress = {this.null}>
+            <Text style={{textAlign: 'center', width: '100%', color: '#ffffff'}}>Pay</Text>
+          </Button>
+        </View>
       </Container>
     )
   }
@@ -75,7 +142,7 @@ const styles = StyleSheet.create({
     paddingBottom:20,
   },
 
-  diagnosisHeader: {
+  billHeader: {
     fontSize: 25,
     color: '#616161',
     fontWeight: 'bold',
@@ -92,3 +159,4 @@ const styles = StyleSheet.create({
     fontSize: 20,
   }
 })
+

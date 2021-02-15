@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { StyleSheet, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, View, Image, TouchableOpacity, Text} from 'react-native';
-import { Container, Header, Content, Card, CardItem, Icon, Right, Body, Form, Item, Button } from 'native-base';
+import { Container, Button, Form, Item } from 'native-base';
 import { Picker } from 'react-native'
 import * as firebase from 'firebase';
 import 'firebase/firestore';
@@ -21,38 +21,38 @@ if (!firebase.apps.length) {
 
 const dbh = firebase.firestore();
 
-class paymentScreen extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {invoiceNo:"" }
+class viewDetailScreen extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { sensei: '' }
   }
 
-  onPaymentPress = async () => {
-    const{ invoiceNo } = this.state
-    this.props.navigation.navigate('Payment Detail', { invoiceNo: invoiceNo })
+  onViewPress = async () => {
+    const { sensei } = this.state
+    this.props.navigation.navigate('View', {sensei: sensei})
   }
 
   render() {
     return(
       <Container>
-        <Text style={styles.header}>Please select invoice to make payment</Text>
+        <Text style={styles.header}>Please select doctor to view people in queue</Text>
         <Form>
-          <Item style={styles.inputWidth}>
+          <Item>
             <Picker
-              selectedValue={this.state.invoiceNo}
-              prompt='Invoice No'
+              selectedValue={this.state.sensei}
+              prompt='Doctor'
               style={{color: '#0000FF', width: "100%"}}
               onValueChange={(itemValue, itemIndex) => 
-                this.setState({invoiceNo: itemValue})}
+                this.setState({sensei: itemValue})}            
             >
               <Picker.Item label="" value=""/>
-              <Picker.Item label="Invoice 0001" value="inv1"/>
-              <Picker.Item label="Invoice 0002" value="inv2"/>
+              <Picker.Item label="Dr Stone" value="Dr Stone"/>
+              <Picker.Item label="Dr Who" value="Dr Who"/>              
             </Picker>
           </Item>
           <View style={{paddingTop: 40}}>
-            <Button rounded primary style={{alignSelf: 'center', width: '90%'}} onPress= {this.onPaymentPress}>
-              <Text style={{textAlign: 'center', width: '100%', color: '#ffffff'}}>Make Payment</Text>
+            <Button rounded primary style={{alignSelf: 'center', width: '90%'}} onPress= {this.onViewPress}>
+              <Text style={{textAlign: 'center', width: '100%', color: '#ffffff'}}>View</Text>
             </Button>
           </View>
         </Form>
@@ -61,7 +61,7 @@ class paymentScreen extends React.Component {
   }
 }
 
-export default paymentScreen
+export default viewDetailScreen
 
 const styles = StyleSheet.create({
   header: {
@@ -83,5 +83,3 @@ const styles = StyleSheet.create({
     width: '93%',
   },
 })
-
-  

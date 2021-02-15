@@ -23,28 +23,31 @@ const dbh = firebase.firestore();
 class viewScreen extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { data: '' }
+    this.state = { data: '', sensei: '' }
     this.getPplQueue(dbh)
   }
 
   getPplQueue = async () => {
-    const QueueInfo = dbh.collection('queue').doc('counter')
-    const doc = await QueueInfo.get()
+    const { sensei } = this.props.route.params
+    this.setState({ sensei:sensei })
+    const queueInfo  = dbh.collection('queue').doc(sensei)
+    const doc = await queueInfo.get()
     if (!doc.exists) {
-      console.log('bakana!?!?!!?!?!??!?')
+      console.log('dochi dochi')
     } else {
       let data = doc.data()
       this.setState({ data:data })
       console.log(data.pplQueue)
-      
     }
   }
 
   render() {
+    const { sensei } = this.props.route.params
     return (
       <Container>
         <View style={styles.headerContainer}>
-          <Text style={styles.headerTop}>Amount of people queuing</Text>
+          <Text style={styles.headerTop}>Amount of people queuing for</Text>
+          <Text style={styles.headerBtm}>{sensei}</Text>
         </View>
         <View style={styles.number}>
           <Text style={styles.queueText}>{this.state.data.pplQueue}</Text>
@@ -76,5 +79,12 @@ const styles = StyleSheet.create({
   queueText: {
     fontSize: 140,
     color: '#000000',
+  },
+
+  headerBtm: {
+    paddingTop: 20,
+    fontSize: 25,
+    color: '#0000FF',
+    fontWeight: 'bold',
   },
 });
