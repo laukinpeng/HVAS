@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { StyleSheet, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, View, Text, Alert, SnapshotViewIOS} from 'react-native';
-import { Button, Form, Item, Label, Input, Container } from 'native-base';
+import { StyleSheet, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, View, Image, TouchableOpacity, Text} from 'react-native';
+import { Container, Button, Form, Item } from 'native-base';
 import { Picker } from 'react-native'
 import * as firebase from 'firebase';
 import 'firebase/firestore';
@@ -21,45 +21,33 @@ if (!firebase.apps.length) {
 
 const dbh = firebase.firestore();
 
-class recordScreen extends React.Component {
+class viewDetailScreen extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {data: '', visitNo: ''}
-    // this.getRecordInfo(dbh)
+    this.state = { sensei: '' }
   }
 
-  // getRecordInfo = async () => {
-  //   const { name } = this.props.route.params
-  //   console.log(name)
-  //   const recordInfo = dbh.collection('record').doc(name).collection('visit')
-  //   const snapshot = await recordInfo.get()
-  //   snapshot.forEach(doc => {
-  //     console.log(doc.id, '=>', doc.data())
-  //   })
-  // }
-
   onViewPress = async () => {
-    const{ visitNo } = this.state
-    this.props.navigation.navigate('Record Detail', {visitNo: visitNo})
+    const { sensei } = this.state
+    this.props.navigation.navigate('View', {sensei: sensei})
   }
 
   render() {
-    return (
+    return(
       <Container>
-        <Text style={styles.header}>Please select your medical record to view</Text>
+        <Text style={styles.header}>Please select doctor to view people in queue</Text>
         <Form>
-          <Text style={styles.header2}>Please select visit record to view</Text>
-          <Item style={styles.inputWidth}>
+          <Item>
             <Picker
-              selectedValue={this.state.visitNo}
-              prompt='Visit No'
+              selectedValue={this.state.sensei}
+              prompt='Doctor'
               style={{color: '#0000FF', width: "100%"}}
               onValueChange={(itemValue, itemIndex) => 
-                this.setState({visitNo: itemValue})}
+                this.setState({sensei: itemValue})}            
             >
               <Picker.Item label="" value=""/>
-              <Picker.Item label="Visit 0001" value="visit1"/>
-              <Picker.Item label="Visit 0002" value="visit2"/>
+              <Picker.Item label="Dr Stone" value="Dr Stone"/>
+              <Picker.Item label="Dr Who" value="Dr Who"/>              
             </Picker>
           </Item>
           <View style={{paddingTop: 40}}>
@@ -73,7 +61,7 @@ class recordScreen extends React.Component {
   }
 }
 
-export default recordScreen
+export default viewDetailScreen
 
 const styles = StyleSheet.create({
   header: {
@@ -84,14 +72,14 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
 
-  inputWidth: {
-    width: '93%',
-  },
-
   header2: {
     fontSize: 20,
     color: '#616161',
     paddingHorizontal: 20,
     paddingTop: 20,
+  },
+
+  inputWidth: {
+    width: '93%',
   },
 })

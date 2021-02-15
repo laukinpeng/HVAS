@@ -30,7 +30,6 @@ class recordDetailScreen extends React.Component {
 
   getRecord = async () => {
     const {visitNo} = this.props.route.params
-    this.setState({ visitNo:visitNo })
     const visitRef = dbh.collection('record').doc('laukinpeng').collection('visit').doc(visitNo)
     const doc = await visitRef.get()
     if (!doc.exists) {
@@ -49,7 +48,8 @@ class recordDetailScreen extends React.Component {
       <Container>
         <Text style={styles.header}>{this.state.data.visitNo}</Text>
         <Text style={styles.header2}>Doctor: {this.state.data.doctor}</Text>
-        <Text style={styles.header3}>Visit Time: {this.state.time} </Text>
+        <Text style={styles.header3}>Visit Time: {this.state.time}</Text>
+        {/* patient name */}
         <Text style={styles.diagnosisHeader}>Diagnosis  Note</Text>
         <View style={styles.card}>
           <Card>
@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
   },
 
   card:{
+    paddingTop: 20,
     width: '93%',
     alignSelf: 'center',
   },

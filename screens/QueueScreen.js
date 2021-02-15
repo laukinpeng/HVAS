@@ -29,7 +29,7 @@ class queueScreen extends React.Component {
   }
 
   getQueueInfo = async () => {
-    const {  sensei } = this.props.route.params;
+    const { sensei } = this.props.route.params;
     const queueInfo = dbh.collection('queue').doc(sensei)
     const doc = await queueInfo.get()
     if (!doc.exists) {
