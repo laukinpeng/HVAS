@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { StyleSheet, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, View, Image, TouchableOpacity, Text} from 'react-native';
-import { Container, Header, Content, Card, CardItem, Icon, Right, Body, Form, Item, Button } from 'native-base';
+import { StyleSheet, View, Text } from 'react-native';
+import { Container, Form, Item, Button } from 'native-base';
 import { Picker } from 'react-native'
 import * as firebase from 'firebase';
 import 'firebase/firestore';
@@ -19,7 +19,6 @@ if (!firebase.apps.length) {
   )
 }
 
-const dbh = firebase.firestore();
 
 class paymentScreen extends React.Component {
   constructor(props){
@@ -42,7 +41,7 @@ class paymentScreen extends React.Component {
               selectedValue={this.state.invoiceNo}
               prompt='Invoice No'
               style={{color: '#0000FF', width: "100%"}}
-              onValueChange={(itemValue, itemIndex) => 
+              onValueChange={(itemValue) => 
                 this.setState({invoiceNo: itemValue})}
             >
               <Picker.Item label="" value=""/>

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { StyleSheet, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, View, Image, TouchableOpacity, Text} from 'react-native';
-import { Container, Header, Content, Card, CardItem, Icon, Right, Body } from 'native-base';
+import { StyleSheet, View, Text } from 'react-native';
+import { Container } from 'native-base';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
 

@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { StyleSheet, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, View, Image, TouchableOpacity, Text} from 'react-native';
-import { Container, Header, Content, Card, CardItem, Icon, Right, Body, Form, Item, Button } from 'native-base';
-import { Picker } from 'react-native'
+import { StyleSheet, View, Text, Alert } from 'react-native';
+import { Container, Card, CardItem, Button } from 'native-base';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
 
@@ -55,6 +54,22 @@ class paymentDetailScreen extends React.Component {
     }
   }
 
+  onPayPress = () => {
+    Alert.alert(
+      "Confirm Payment",
+      "Press ok to be redireected to payment site",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Payment"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => console.log("OK Pressed") }
+      ],
+      { cancelable: false }
+    )
+  }
+
   render() {
     return(
       <Container>
@@ -95,6 +110,7 @@ class paymentDetailScreen extends React.Component {
                 </View>
               </View>
             </CardItem>
+            <View style={{borderBottomColor: 'black', borderBottomWidth: 1, width: "93%", alignSelf: 'center'}}/>
             <CardItem>
               <View style={{flex: 1, justifyContent: 'space-between', flexDirection: 'row'}}>
                 <View>
@@ -108,7 +124,7 @@ class paymentDetailScreen extends React.Component {
           </Card>
         </View>
         <View style={{paddingTop: 40}}>
-          <Button rounded primary style={{alignSelf: 'center', width: '90%'}} onPress = {this.null}>
+          <Button rounded primary style={{alignSelf: 'center', width: '90%'}} onPress = {this.onPayPress}>
             <Text style={{textAlign: 'center', width: '100%', color: '#ffffff'}}>Pay</Text>
           </Button>
         </View>

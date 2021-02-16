@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { StyleSheet, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, View, Text, Alert} from 'react-native';
-import { Button, Form, Item, Label, Input, Container} from 'native-base';
+import { StyleSheet, KeyboardAvoidingView, View, Text } from 'react-native';
+import { Button, Form, Item, Container } from 'native-base';
 import { Picker } from 'react-native'
 import * as firebase from 'firebase';
 import 'firebase/firestore';
@@ -65,7 +65,7 @@ class visitScreen extends React.Component {
                 selectedValue={this.state.sensei}
                 prompt='Doctor'
                 style={{color: '#0000FF', width: "100%"}}
-                onValueChange={(itemValue, itemIndex) => 
+                onValueChange={(itemValue) => 
                   this.setState({sensei: itemValue})}
               >
                 <Picker.Item label="" value=""/>
@@ -79,7 +79,7 @@ class visitScreen extends React.Component {
                 selectedValue={this.state.reason}
                 prompt='Reason'
                 style={{color: '#0000FF', width: "100%"}}
-                onValueChange={(itemValue, itemIndex) => 
+                onValueChange={(itemValue) => 
                   this.setState({reason: itemValue})}
               >
                 <Picker.Item label="" value=""/>
