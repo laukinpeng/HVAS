@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { StyleSheet, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, View, Text, Alert, SnapshotViewIOS} from 'react-native';
-import { Button, Form, Item, Label, Input, Container } from 'native-base';
+import { StyleSheet, View, Text } from 'react-native';
+import { Button, Form, Item, Container } from 'native-base';
 import { Picker } from 'react-native'
 import * as firebase from 'firebase';
 import 'firebase/firestore';
@@ -19,7 +19,6 @@ if (!firebase.apps.length) {
   )
 }
 
-const dbh = firebase.firestore();
 
 class recordScreen extends React.Component {
   constructor(props) {
@@ -54,7 +53,7 @@ class recordScreen extends React.Component {
               selectedValue={this.state.visitNo}
               prompt='Visit No'
               style={{color: '#0000FF', width: "100%"}}
-              onValueChange={(itemValue, itemIndex) => 
+              onValueChange={(itemValue) => 
                 this.setState({visitNo: itemValue})}
             >
               <Picker.Item label="" value=""/>

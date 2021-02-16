@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, View, Image, TouchableOpacity, Text} from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { Container, Button, Form, Item } from 'native-base';
 import { Picker } from 'react-native'
 import * as firebase from 'firebase';
@@ -19,7 +19,6 @@ if (!firebase.apps.length) {
   )
 }
 
-const dbh = firebase.firestore();
 
 class viewDetailScreen extends React.Component {
   constructor(props) {
@@ -42,7 +41,7 @@ class viewDetailScreen extends React.Component {
               selectedValue={this.state.sensei}
               prompt='Doctor'
               style={{color: '#0000FF', width: "100%"}}
-              onValueChange={(itemValue, itemIndex) => 
+              onValueChange={(itemValue) => 
                 this.setState({sensei: itemValue})}            
             >
               <Picker.Item label="" value=""/>

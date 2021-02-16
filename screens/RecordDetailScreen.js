@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { StyleSheet, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, View, Text, Alert} from 'react-native';
-import { Button, Form, Item, Label, Input, Container, Card, CardItem} from 'native-base';
-import { Picker } from 'react-native'
+import { StyleSheet, View, Text } from 'react-native';
+import { Container, Card, CardItem } from 'native-base';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
 

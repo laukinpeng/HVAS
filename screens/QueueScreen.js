@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { StyleSheet, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, View, Text, Alert} from 'react-native';
-import { Button, Form, Item, Label, Input, Container, Card, CardItem } from 'native-base';
+import { StyleSheet, View, Text } from 'react-native';
+import { Button, Container } from 'native-base';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
 
@@ -42,7 +42,7 @@ class queueScreen extends React.Component {
   }
 
   getVisitInfo = async () => {
-    const { name, sensei } = this.props.route.params;
+    const { name } = this.props.route.params;
     const visitInfo = dbh.collection('visit').doc(name)
     const doc = await visitInfo.get()
     if (!doc.exists) {
