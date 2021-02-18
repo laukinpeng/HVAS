@@ -76,7 +76,7 @@ class paymentDetailScreen extends React.Component {
         <Text style={styles.header}>{this.state.data.invoiceNo}</Text>
         <Text style={styles.header2}>Doctor: {this.state.data.inChargeDoctor}</Text>
         <Text style={styles.header3}>Date/Time: {this.state.time}</Text>
-        {/* patient name */}
+        <Text style={styles.header4}>Patient Name: Lau Kin Peng</Text>
         <Text style={styles.billHeader}>Description</Text>
         <View style={styles.card}>
           <Card>
@@ -156,6 +156,12 @@ const styles = StyleSheet.create({
     color: '#616161',
     paddingHorizontal: 20,
     paddingBottom:20,
+  },
+
+  header4: {
+    fontSize: 20,
+    color: '#616161',
+    paddingHorizontal: 20,
   },
 
   billHeader: {

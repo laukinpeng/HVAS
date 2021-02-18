@@ -48,8 +48,8 @@ class recordDetailScreen extends React.Component {
         <Text style={styles.header}>{this.state.data.visitNo}</Text>
         <Text style={styles.header2}>Doctor: {this.state.data.doctor}</Text>
         <Text style={styles.header3}>Visit Time: {this.state.time}</Text>
-        {/* patient name */}
-        <Text style={styles.diagnosisHeader}>Diagnosis  Note</Text>
+        <Text style={styles.header4}>Patient Name: Lau Kin Peng</Text>
+        <Text style={styles.diagnosisHeader}>Diagnosis Note</Text>
         <View style={styles.card}>
           <Card>
             <CardItem>
@@ -87,6 +87,12 @@ const styles = StyleSheet.create({
     color: '#616161',
     paddingHorizontal: 20,
     paddingBottom:20,
+  },
+
+  header4: {
+    fontSize: 20,
+    color: '#616161',
+    paddingHorizontal: 20,
   },
 
   diagnosisHeader: {
