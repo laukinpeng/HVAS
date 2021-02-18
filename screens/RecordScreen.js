@@ -19,7 +19,6 @@ if (!firebase.apps.length) {
   )
 }
 
-
 class recordScreen extends React.Component {
   constructor(props) {
     super(props)

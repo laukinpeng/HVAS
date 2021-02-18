@@ -10,6 +10,7 @@
   "dependencies": {
     "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/clipboard": "^1.5.1",
+    "@react-native-community/datetimepicker": "3.0.0",
     "@react-native-community/masked-view": "0.1.10",
     "@react-native-picker/picker": "^1.9.10",
     "@react-navigation/native": "^5.9.0",
@@ -27,6 +28,7 @@
     "react-native-code-input": "^1.0.6",
     "react-native-confirmation-code-field": "^6.5.1",
     "react-native-gesture-handler": "~1.7.0",
+    "react-native-material-dropdown": "^0.11.1",
     "react-native-otp": "^1.0.0",
     "react-native-otp-inputs": "^6.0.0",
     "react-native-reanimated": "~1.13.0",

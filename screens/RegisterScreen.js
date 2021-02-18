@@ -24,7 +24,7 @@ const dbh = firebase.firestore();
 class registerScreen extends React.Component {
   constructor(props){
     super(props)
-    this.state = {email: '', password: '', error: '', name: '', loading:false, gender: ''}
+    this.state = {email: '', password: '', error: '', name: '', loading:false, gender: '', dob: '', address: ''}
   }
 
   onSignUpPress = () => {
@@ -82,8 +82,15 @@ class registerScreen extends React.Component {
                   value={this.state.name}
                 />
               </Item>
+              <Item floatingLabel style={styles.inputWidth}>
+                <Label>Address</Label>
+                <Input
+                  onChangeText={address => this.setState({address})}
+                  value={this.state.address}
+                />
+              </Item>
+              <Text style={styles.header3}>Please select your gender</Text>
               <Item style={styles.inputWidth}>
-                <Label>Gender</Label>
                 <Picker
                   selectedValue={this.state.gender}
                   prompt='Gender'
@@ -91,6 +98,7 @@ class registerScreen extends React.Component {
                   onValueChange={(itemValue, itemIndex) => 
                     this.setState({gender: itemValue})}
                 >
+                  
                   <Picker.Item label="" value=""/>
                   <Picker.Item label="Male" value="Male"/>
                   <Picker.Item label="Female" value="Female"/>
@@ -126,6 +134,13 @@ const styles = StyleSheet.create({
     color: '#616161',
     paddingHorizontal: 20,
     paddingBottom:20,
+  },
+
+  header3: {
+    fontSize: 20,
+    color: '#616161',
+    paddingHorizontal: 20,
+    paddingTop: 20,
   },
 
   inputWidth: {
