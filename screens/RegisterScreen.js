@@ -29,7 +29,7 @@ class registerScreen extends React.Component {
 
   onSignUpPress = () => {
     this.setState({error:'', loading:true})
-    const{ email, password, name, gender } = this.state
+    const{ email, password, name, gender, address } = this.state
     if (this.state.password.length < 7) {
       Alert.alert('Alert', 'Please type more then 8');
       return;
@@ -48,6 +48,7 @@ class registerScreen extends React.Component {
         userPassword: password,
         userName: name,
         userGender: gender,
+        userAddress: address,
       }
     )
   }
@@ -98,7 +99,6 @@ class registerScreen extends React.Component {
                   onValueChange={(itemValue, itemIndex) => 
                     this.setState({gender: itemValue})}
                 >
-                  
                   <Picker.Item label="" value=""/>
                   <Picker.Item label="Male" value="Male"/>
                   <Picker.Item label="Female" value="Female"/>

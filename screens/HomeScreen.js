@@ -23,7 +23,7 @@ const dbh = firebase.firestore();
 class homeScreen extends React.Component {
   constructor(props){
     super(props);
-    this.state = { data: '', result: [], queueNo: '' }
+    this.state = { data: '', result: [], queueNo: '', name: '' }
     this.getInfo(dbh)
   }
 
@@ -50,7 +50,8 @@ class homeScreen extends React.Component {
   }
 
   onPaymentPress = async () => {
-    this.props.navigation.navigate('Payment')
+    const name = this.state.data.userName
+    this.props.navigation.navigate('Payment', { name:name })
   }
 
   onViewPress = async () => {
@@ -58,7 +59,7 @@ class homeScreen extends React.Component {
   }
 
   getInfo = async () => {
-    const { email } = this.props.route.params;
+    const { email } = this.props.route.params
     const userInfo = dbh.collection('users').doc(email)
     const doc = await userInfo.get()
     if (!doc.exists) {

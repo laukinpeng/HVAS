@@ -28,8 +28,8 @@ class paymentDetailScreen extends React.Component {
   }
 
   getPayment = async () => {
-    const {invoiceNo} = this.props.route.params
-    const paymentRef = dbh.collection('payment').doc('laukinpeng').collection('invoice').doc(invoiceNo)
+    const {invoiceNo, name} = this.props.route.params
+    const paymentRef = dbh.collection('payment').doc(name).collection('invoice').doc(invoiceNo)
     const doc = await paymentRef.get()
     if(!doc.exists) {
       console.log('patient dato son')
@@ -64,9 +64,9 @@ class paymentDetailScreen extends React.Component {
           onPress: () => console.log("Cancel Payment"),
           style: "cancel"
         },
-        { text: "OK", onPress: () => console.log("OK Pressed") }
+        {text: "OK", onPress: () => console.log("OK Pressed")}
       ],
-      { cancelable: false }
+      {cancelable: false}
     )
   }
 

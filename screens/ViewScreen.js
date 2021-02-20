@@ -29,7 +29,6 @@ class viewScreen extends React.Component {
 
   getPplQueue = async () => {
     const { sensei } = this.props.route.params
-    this.setState({ sensei:sensei })
     const queueInfo  = dbh.collection('queue').doc(sensei)
     const doc = await queueInfo.get()
     if (!doc.exists) {
