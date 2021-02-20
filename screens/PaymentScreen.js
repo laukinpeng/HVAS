@@ -4,6 +4,7 @@ import { Container, Form, Item, Button } from 'native-base';
 import { Picker } from 'react-native'
 import * as firebase from 'firebase';
 import 'firebase/firestore';
+import { ThemeProvider } from '@react-navigation/native';
 
 if (!firebase.apps.length) {
   firebase.initializeApp(
@@ -19,16 +20,27 @@ if (!firebase.apps.length) {
   )
 }
 
+const dbh = firebase.firestore();
 
 class paymentScreen extends React.Component {
   constructor(props){
     super(props);
-    this.state = {invoiceNo:"" }
+    this.state = {invoiceNo:"", name:"", data: [], result: ""}
+    this.getInvoice(dbh)
   }
 
   onPaymentPress = async () => {
+    const {name} = this.props.route.params
     const{ invoiceNo } = this.state
-    this.props.navigation.navigate('Payment Detail', { invoiceNo: invoiceNo })
+    this.props.navigation.navigate('Payment Detail', { invoiceNo: invoiceNo, name: name })
+  }
+
+  getInvoice = async () => {
+    const {name} = this.props.route.params
+    const snapshot = await dbh.collection('payment').doc(name).collection('invoice').get()
+    snapshot.docs.map(doc => doc.id)
+    let data = (snapshot.docs.map(doc => doc.id))
+    this.setState({ data:data })
   }
 
   render() {
@@ -44,9 +56,12 @@ class paymentScreen extends React.Component {
               onValueChange={(itemValue) => 
                 this.setState({invoiceNo: itemValue})}
             >
-              <Picker.Item label="" value=""/>
+              {this.state.data.map((item) => {
+                return (<Picker.Item label={item.toString()} value={item} key={item}/>)
+              })}
+              {/* <Picker.Item label="" value=""/>
               <Picker.Item label="Invoice 0001" value="inv1"/>
-              <Picker.Item label="Invoice 0002" value="inv2"/>
+              <Picker.Item label="Invoice 0002" value="inv2"/> */}
             </Picker>
           </Item>
           <View style={{paddingTop: 40}}>

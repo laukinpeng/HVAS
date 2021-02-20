@@ -24,12 +24,12 @@ const dbh = firebase.firestore();
 class registerScreen extends React.Component {
   constructor(props){
     super(props)
-    this.state = {email: '', password: '', error: '', name: '', loading:false, gender: ''}
+    this.state = {email: '', password: '', error: '', name: '', loading:false, gender: '', dob: '', address: ''}
   }
 
   onSignUpPress = () => {
     this.setState({error:'', loading:true})
-    const{ email, password, name, gender } = this.state
+    const{ email, password, name, gender, address } = this.state
     if (this.state.password.length < 7) {
       Alert.alert('Alert', 'Please type more then 8');
       return;
@@ -48,6 +48,7 @@ class registerScreen extends React.Component {
         userPassword: password,
         userName: name,
         userGender: gender,
+        userAddress: address,
       }
     )
   }
@@ -82,8 +83,15 @@ class registerScreen extends React.Component {
                   value={this.state.name}
                 />
               </Item>
+              <Item floatingLabel style={styles.inputWidth}>
+                <Label>Address</Label>
+                <Input
+                  onChangeText={address => this.setState({address})}
+                  value={this.state.address}
+                />
+              </Item>
+              <Text style={styles.header3}>Please select your gender</Text>
               <Item style={styles.inputWidth}>
-                <Label>Gender</Label>
                 <Picker
                   selectedValue={this.state.gender}
                   prompt='Gender'
@@ -126,6 +134,13 @@ const styles = StyleSheet.create({
     color: '#616161',
     paddingHorizontal: 20,
     paddingBottom:20,
+  },
+
+  header3: {
+    fontSize: 20,
+    color: '#616161',
+    paddingHorizontal: 20,
+    paddingTop: 20,
   },
 
   inputWidth: {
