@@ -58,7 +58,7 @@ class registerScreen extends React.Component {
       <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : 'height'} style={{flex: 1}}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <Container style={{flex: 1}}>
-            <Text style={styles.header}>Personal Datails</Text>
+            <Text style={styles.header}>Personal Details</Text>
             <Text style={styles.header2}>Please enter your detail</Text>
             <Form>
               <Item floatingLabel style={styles.inputWidth}>

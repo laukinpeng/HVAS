@@ -46,7 +46,7 @@ class viewDetailScreen extends React.Component {
             >
               <Picker.Item label="" value=""/>
               <Picker.Item label="Dr Stone" value="Dr Stone"/>
-              <Picker.Item label="Dr Who" value="Dr Who"/>              
+              <Picker.Item label="Dr Who" value="Dr Who"/>
             </Picker>
           </Item>
           <View style={{paddingTop: 40}}>
