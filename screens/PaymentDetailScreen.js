@@ -126,7 +126,7 @@ class paymentDetailScreen extends React.Component {
         <View style={{paddingTop: 40}}>
           <Button rounded primary style={{alignSelf: 'center', width: '90%'}} onPress = {this.onPayPress}>
             <Text style={{textAlign: 'center', width: '100%', color: '#ffffff'}}>Pay</Text>
-          </Button>
+          </Button>~
         </View>
       </Container>
     )
