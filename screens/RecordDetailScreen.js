@@ -36,7 +36,7 @@ class recordDetailScreen extends React.Component {
     } else {
       let data = doc.data()
       this.setState({ data:data })
-      const time = data.visitTime.toDate().toTimeString().substr(0, 8)
+      const time = data.visitTime.toDate().toTimeString().substr(0, 23)
       this.setState({ time:time })
       console.log(data)
     }
